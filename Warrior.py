@@ -8,3 +8,8 @@ class Warrior():
 
     def __init__(self, stats):
         self.stats = stats
+    
+    def printStats(self):
+        print(Warrior.player_class)
+        self.stats.printStats()
+        print(Warrior.skills)

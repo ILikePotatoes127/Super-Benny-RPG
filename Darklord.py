@@ -8,3 +8,8 @@ class Darklord():
 
     def __init__(self, stats):
         self.stats = stats
+    
+    def printStats(self):
+        print(Darklord.player_class)
+        self.stats.printStats()
+        print(Darklord.skills)

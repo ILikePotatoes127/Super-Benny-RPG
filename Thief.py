@@ -8,3 +8,8 @@ class Thief():
 
     def __init__(self, stats):
         self.stats = stats
+    
+    def printStats(self):
+        print(Thief.player_class)
+        self.stats.printStats()
+        print(Thief.skills)

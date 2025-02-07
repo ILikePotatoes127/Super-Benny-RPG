@@ -7,52 +7,34 @@ from Darklord import *
 import math
 
 
-def start():
+class_stats = {
+    "Mage":[50,5,5,20,15,5,100,[],Mage],
+    "Thief":[75, 15, 20, 35, 30, 25, 65, [],Thief],
+    "Warrior":[100, 25, 35, 15, 5, 5, 35, [],Warrior],
+    "Darklord":[80, 20, 25, 20, 5, 5, 70, [],Darklord]
+}
+
+def main():
     print("Welcome to Super Benny RPG!!")
-    
-    class_select()
+
+    player = class_select()
+
+    player.printStats()
 
 def class_select():
     print("Choose your class (Type in one of the following to choose): ")
     print("Mage, Thief, Warrior, Darklord")
-    stats
     rpg_class = input()
 
-    if rpg_class == "Mage":
-        stats = Player(50, 5, 5, 20, 15, 5, 100, [])
-        player = Mage(stats)
-        #Skills ["Fireball", "Lightning Bolt", "Heal", "Magic Defense", "Magice Missile", "Cone of Frost", "Water Elemental"]
-        
-    elif rpg_class == "Thief":
-        stats = Player(75, 15, 20, 35, 30, 25, 65, [])
-        player = Thief(stats)
-        #Skills ["Steal", "Shank", "Back stab (Bleed)", "Lacerate (Slow)", "Smoke Bomb (Increased evasion)", "Blunder Bust"]
-
-    elif rpg_class == "Warrior":
-        stats = Player(100, 25, 35, 15, 5, 5, 35, [])
-        player = Warrior(stats)
-        #Skills ["Great Slash", "Shield Bash", "Armor Up (Defense increase)", "Warrior Cry"]
-
-    elif rpg_class == "Darklord":
-        stats = Player(80, 20, 25, 20, 5, 5, 70, [])
-        player = Darklord(stats)
-        #Skills ["Skeleton Minion", "Skull Blast", "Lifesteal", "Curse", "Meteor"]
-
+    if rpg_class in class_stats:
+        c = class_stats[rpg_class]
+        stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7])
+        class_constructor = c[8]
+        player = class_constructor(stats)
+        return player
     else:
-        class_select()
+        return class_select()
 
-
-def check_stats():
-    print("Player Stats:")
-    print("Class: " + player_data["class"])
-    print("Health: " + player_data["health"])
-    print("Defense: " + player_data["defense"])
-    print("Attack: " + player_data["attack"])
-    print("Speed: " + player_data["speed"])
-    print("Evasion: " + player_data["evasion"])
-    print("Luck: " + player_data["luck"])
-    print("Mana: " + player_data["mana"])
-    print("Skills: " + player_data["skills"])
 
 
 def battle():
@@ -104,8 +86,7 @@ def skeleton_minion():
 #start()
 
 if __name__ == "__main__":
-    stats = Player(10,20,10,10,10,10,10,10)
-    player = Mage(stats)
-    player.printStats()
-    player.stats.health = 50
-    player.printStats()
+    main()
+    #stats = Player(10,20,10,10,10,10,10,10)
+    #player = Mage(stats)
+    #player.printStats()
