@@ -25,10 +25,10 @@ enemy_stats = {
 #Dictionary for class_select() function
 #Arrays are filled with character stats and their corresponding constructor
 class_stats = {
-    "Mage":[50,5,5,20,15,5,100,Mage],
-    "Thief":[75, 15, 20, 35, 30, 25, 65,Thief],
-    "Warrior":[100, 25, 35, 15, 5, 5, 35,Warrior],
-    "Darklord":[80, 20, 25, 20, 5, 5, 70,Darklord]
+    "Mage":[50,5,5,20,15,5,100,0, Mage],
+    "Thief":[75, 15, 20, 35, 30, 25, 65, 0, Thief],
+    "Warrior":[100, 25, 35, 15, 5, 5, 35, 0, Warrior],
+    "Darklord":[80, 20, 25, 20, 5, 5, 70, 0, Darklord]
 }
 
 #Returns a player under a specific class depending on their input.
@@ -46,8 +46,8 @@ def class_select():
 
     if rpg_class in class_stats:
         c = class_stats[rpg_class]
-        stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], basic_items)
-        class_constructor = c[7]
+        stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], basic_items)
+        class_constructor = c[8]
         player = class_constructor(stats)
         return player
     else:
@@ -78,16 +78,10 @@ def player_turn():
 
 
 def attack():
-    enemy_data["health"]-=player_data["health"]
+    pass
 
 def skill():
-    print("Choose a skill:")
-    print(player_data["skills"])
-    choice = input()
-    if choice in player_data["skills"]:
-        pass
-    else:
-        skill()
+    pass
 
 def item():
     pass
@@ -103,11 +97,21 @@ def skeleton_minion():
 
 #Contains Core Game Loop
 def main():
-    print("Welcome to Super Benny RPG!!")
+
+    intro()
 
     player = class_select()
+    print()
 
     player.printStats()
+
+    #enemy = enemy_select()
+
+#This is just gonna be a bunch of prints to tell players how the game works
+def intro():
+    print("Welcome to Super Benny RPG!!")
+    print()
+
 
 #Checks if smth smth (I act don't know, I just see people do this all the time)
 if __name__ == "__main__":
