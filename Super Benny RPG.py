@@ -40,6 +40,7 @@ def class_select():
         "Speed Potion": 0,
         "Strength Potion": 0
     }
+
     print("Choose your class (Type in one of the following to choose): ")
     print("Mage, Thief, Warrior, Darklord")
     rpg_class = input()
@@ -105,7 +106,10 @@ def main():
 
     player.printStats()
 
+    #While The Player is not Dead
     #enemy = enemy_select()
+    #start the battle between player and enemy
+    #
 
 #This is just gonna be a bunch of prints to tell players how the game works
 def intro():
