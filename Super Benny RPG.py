@@ -2,6 +2,8 @@ from Mage import *
 from Thief import *
 from Warrior import *
 from Darklord import *
+import math
+
 
 
 enemy_data = {
@@ -162,9 +164,11 @@ def skeleton_minion():
 #start()
 '''
 
-#if __name__ == "__main__":
-stats = Player(10,20,10,10,10,10,10,10)
-player = Mage(stats)
-player.printStats()
-player.stats.health = 50
-player.printStats()
+if __name__ == "__main__":
+
+
+    stats = Player(10,20,10,10,10,10,10,10)
+    player = Mage(stats)
+    player.printStats()
+    player.stats.health = 50
+    player.printStats()
