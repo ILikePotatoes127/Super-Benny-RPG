@@ -1,9 +1,10 @@
 #Warrior
 
 from Player import *
-class Mage():
+class Warrior():
     player_class = "Warrior"
     skills = ["Fireball"]
+    #Skills ["Great Slash", "Shield Bash", "Armor Up (Defense increase)", "Warrior Cry"]
 
     def __init__(self, stats):
         self.stats = stats

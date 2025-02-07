@@ -2,37 +2,10 @@ from Mage import *
 from Thief import *
 from Warrior import *
 from Darklord import *
+
+
 import math
 
-
-
-enemy_data = {
-    "type":"Goblin",
-    "health": 10,
-    "defense":10,
-    "attack":10,
-    "speed":10,
-    "evasion":10,
-    "luck":10,
-    "mana":10,
-    "items":10,
-    "skills":["Stab"],
-}
-'''
-skills = {
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab,
-    "stab":stab
-}
 
 def start():
     print("Welcome to Super Benny RPG!!")
@@ -40,62 +13,29 @@ def start():
     class_select()
 
 def class_select():
-    global player_data
     print("Choose your class (Type in one of the following to choose): ")
     print("Mage, Thief, Warrior, Darklord")
-    
+    stats
     rpg_class = input()
 
     if rpg_class == "Mage":
-        player_data["class"] = "Mage"
-        player_data["health"] = 10
-        player_data["defense"] = 10
-        player_data["attack"] = 10
-        player_data["speed"] = 10
-        player_data["evasion"] = 10
-        player_data["luck"] = 10
-        player_data["mana"] = 10
-        player_data["items"] = 10
-        player_data["skills"] = ["Fireball"]
+        stats = Player(50, 5, 5, 20, 15, 5, 100, [])
+        player = Mage(stats)
         #Skills ["Fireball", "Lightning Bolt", "Heal", "Magic Defense", "Magice Missile", "Cone of Frost", "Water Elemental"]
         
     elif rpg_class == "Thief":
-        player_data["class"] = "Thief"
-        player_data["health"] = 10
-        player_data["defense"] = 10
-        player_data["attack"] = 10
-        player_data["speed"] = 10
-        player_data["evasion"] = 10
-        player_data["luck"] = 10
-        player_data["mana"] = 10
-        player_data["items"] = 10
-        player_data["skills"] = ["Steal"]
+        stats = Player(75, 15, 20, 35, 30, 25, 65, [])
+        player = Thief(stats)
         #Skills ["Steal", "Shank", "Back stab (Bleed)", "Lacerate (Slow)", "Smoke Bomb (Increased evasion)", "Blunder Bust"]
 
     elif rpg_class == "Warrior":
-        player_data["class"] = "Warrior"
-        player_data["health"] = 10
-        player_data["defense"] = 10
-        player_data["attack"] = 10
-        player_data["speed"] = 10
-        player_data["evasion"] = 10
-        player_data["luck"] = 10
-        player_data["mana"] = 10
-        player_data["items"] = 10
-        player_data["skills"] = ["Great Slash"]
+        stats = Player(100, 25, 35, 15, 5, 5, 35, [])
+        player = Warrior(stats)
         #Skills ["Great Slash", "Shield Bash", "Armor Up (Defense increase)", "Warrior Cry"]
 
     elif rpg_class == "Darklord":
-        player_data["class"] = "Darklord"
-        player_data["health"] = 10
-        player_data["defense"] = 10
-        player_data["attack"] = 10
-        player_data["speed"] = 10
-        player_data["evasion"] = 10
-        player_data["luck"] = 10
-        player_data["mana"] = 10
-        player_data["items"] = 10
-        player_data["skills"] = ["Skeleton Minion"]
+        stats = Player(80, 20, 25, 20, 5, 5, 70, [])
+        player = Darklord(stats)
         #Skills ["Skeleton Minion", "Skull Blast", "Lifesteal", "Curse", "Meteor"]
 
     else:
@@ -162,11 +102,8 @@ def skeleton_minion():
     pass
 
 #start()
-'''
 
 if __name__ == "__main__":
-
-
     stats = Player(10,20,10,10,10,10,10,10)
     player = Mage(stats)
     player.printStats()
