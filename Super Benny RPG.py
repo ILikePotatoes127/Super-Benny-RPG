@@ -1,16 +1,8 @@
+from Mage import *
+from Thief import *
+from Warrior import *
+from Darklord import *
 
-player_data = {
-    "class":"",
-    "health":0,
-    "defense":0,
-    "attack":0,
-    "speed":0,
-    "evasion":0,
-    "luck":0,
-    "mana":0,
-    "items":0,
-    "skills":[]
-}
 
 enemy_data = {
     "type":"Goblin",
@@ -24,7 +16,7 @@ enemy_data = {
     "items":10,
     "skills":["Stab"],
 }
-
+'''
 skills = {
     "stab":stab,
     "stab":stab,
@@ -167,4 +159,12 @@ def enemy_turn():
 def skeleton_minion():
     pass
 
-start()
+#start()
+'''
+
+#if __name__ == "__main__":
+stats = Player(10,20,10,10,10,10,10,10)
+player = Mage(stats)
+player.printStats()
+player.stats.health = 50
+player.printStats()
