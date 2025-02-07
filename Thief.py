@@ -10,6 +10,6 @@ class Thief():
         self.stats = stats
     
     def printStats(self):
-        print(Thief.player_class)
+        print("Class: "+Thief.player_class)
+        print("Skills: "+" ".join(Thief.skills))
         self.stats.printStats()
-        print(Thief.skills)

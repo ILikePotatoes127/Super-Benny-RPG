@@ -10,6 +10,6 @@ class Darklord():
         self.stats = stats
     
     def printStats(self):
-        print(Darklord.player_class)
+        print("Class: "+Darklord.player_class)
+        print("Skills: "+" ".join(Darklord.skills))
         self.stats.printStats()
-        print(Darklord.skills)

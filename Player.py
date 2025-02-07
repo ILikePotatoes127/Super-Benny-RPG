@@ -1,6 +1,4 @@
 #Player
-
-
 class Player():
     def __init__(self, health, defense, attack, speed, evasion, luck, mana, items):
         self.health = health
@@ -13,12 +11,13 @@ class Player():
         self.items = items 
     
     def printStats(self):
-        print(self.health)
-        print(self.defense)
-        print(self.attack)
-        print(self.speed)
-        print(self.evasion)
-        print(self.luck)
-        print(self.mana)
-        print(self.items)
+        print("Health: "+str(self.health))
+        print("Defense: "+str(self.defense))
+        print("Attack: "+str(self.attack))
+        print("Speed: "+str(self.speed))
+        print("Evasion: "+str(self.evasion))
+        print("Luck: "+str(self.luck))
+        print("Mana: "+str(self.mana))
+        for item in self.items:
+            print(f"{item}: {self.items[item]}")
         

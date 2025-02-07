@@ -9,6 +9,6 @@ class Mage():
         self.stats = stats
         
     def printStats(self):
-        print(Mage.player_class)
+        print("Class: "+Mage.player_class)
+        print("Skills: "+" ".join(Mage.skills))
         self.stats.printStats()
-        print(Mage.skills)

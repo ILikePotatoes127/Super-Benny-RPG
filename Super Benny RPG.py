@@ -7,29 +7,47 @@ from Darklord import *
 import math
 
 
-class_stats = {
-    "Mage":[50,5,5,20,15,5,100,[],Mage],
-    "Thief":[75, 15, 20, 35, 30, 25, 65, [],Thief],
-    "Warrior":[100, 25, 35, 15, 5, 5, 35, [],Warrior],
-    "Darklord":[80, 20, 25, 20, 5, 5, 70, [],Darklord]
+
+#Dictionary for enemy_select() function
+#Arrays are filleed with character stats and their corresponding constructor
+enemy_stats = {
+    "Bat Benny":[],
+    "Green Benny": [],
+    "Red Benny": [],
+    "Blue Benny": [],
+    "Gold Benny": [],
+    "Turbo Benny": [],
+    "Paper Benny": [],
+    "Evil Benny": [],
+    "Karaoke Benny": []
 }
 
-def main():
-    print("Welcome to Super Benny RPG!!")
+#Dictionary for class_select() function
+#Arrays are filled with character stats and their corresponding constructor
+class_stats = {
+    "Mage":[50,5,5,20,15,5,100,Mage],
+    "Thief":[75, 15, 20, 35, 30, 25, 65,Thief],
+    "Warrior":[100, 25, 35, 15, 5, 5, 35,Warrior],
+    "Darklord":[80, 20, 25, 20, 5, 5, 70,Darklord]
+}
 
-    player = class_select()
-
-    player.printStats()
-
+#Returns a player under a specific class depending on their input.
 def class_select():
+    #Dictionary that holds all item variants
+    basic_items = {
+        "Health Potion": 0,
+        "Reinforcement Potion": 0,
+        "Speed Potion": 0,
+        "Strength Potion": 0
+    }
     print("Choose your class (Type in one of the following to choose): ")
     print("Mage, Thief, Warrior, Darklord")
     rpg_class = input()
 
     if rpg_class in class_stats:
         c = class_stats[rpg_class]
-        stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7])
-        class_constructor = c[8]
+        stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], basic_items)
+        class_constructor = c[7]
         player = class_constructor(stats)
         return player
     else:
@@ -83,10 +101,14 @@ def enemy_turn():
 def skeleton_minion():
     pass
 
-#start()
+#Contains Core Game Loop
+def main():
+    print("Welcome to Super Benny RPG!!")
 
+    player = class_select()
+
+    player.printStats()
+
+#Checks if smth smth (I act don't know, I just see people do this all the time)
 if __name__ == "__main__":
     main()
-    #stats = Player(10,20,10,10,10,10,10,10)
-    #player = Mage(stats)
-    #player.printStats()

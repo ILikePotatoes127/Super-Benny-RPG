@@ -10,6 +10,6 @@ class Warrior():
         self.stats = stats
     
     def printStats(self):
-        print(Warrior.player_class)
+        print("Class: "+Warrior.player_class)
+        print("Skills: "+" ".join(Warrior.skills))
         self.stats.printStats()
-        print(Warrior.skills)
