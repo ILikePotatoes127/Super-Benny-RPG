@@ -3,10 +3,7 @@ from Thief import *
 from Warrior import *
 from Darklord import *
 
-
 import math
-
-
 
 #Dictionary for enemy_select() function
 #Arrays are filleed with character stats and their corresponding constructor
@@ -63,7 +60,7 @@ def battle():
     enemy_turn()
 
 def player_turn():
-    print("(Attack, Skill, Item, Run)")
+    print("(Attack, Skill, Item)")
     move = True
     while move:
         choice = input()
@@ -74,9 +71,6 @@ def player_turn():
             skill()
         if choice=="Item":
             item()
-        if choice=="Run":
-            run()
-
 
 def attack():
     pass
@@ -85,9 +79,6 @@ def skill():
     pass
 
 def item():
-    pass
-
-def run():
     pass
 
 def enemy_turn():
