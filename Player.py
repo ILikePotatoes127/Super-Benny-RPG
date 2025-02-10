@@ -1,4 +1,5 @@
 #Player
+from Enemy import *
 class Player():
     def __init__(self, health, defense, attack, speed, evasion, luck, mana, gold, items):
         self.health = health
@@ -22,4 +23,6 @@ class Player():
         print("Gold: "+str(self.gold))
         for item in self.items:
             print(f"{item}: {self.items[item]}")
-        
+    
+    def attack_enemy(self, enemy:Enemy):
+        enemy.health -= max(self.attack - enemy.defense)

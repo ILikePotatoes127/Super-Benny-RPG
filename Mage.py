@@ -12,3 +12,7 @@ class Mage():
         print("Class: "+Mage.player_class)
         print("Skills: "+" ".join(Mage.skills))
         self.stats.printStats()
+    
+    def attack_enemy(self, enemy:Enemy):
+        print("You attack " + enemy.name)
+        self.stats.attack_enemy(enemy)
