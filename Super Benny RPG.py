@@ -3,6 +3,8 @@ from Thief import *
 from Warrior import *
 from Darklord import *
 
+from Bat_Benny import *
+
 import math
 
 #Dictionary for enemy_select() function
@@ -22,7 +24,7 @@ enemy_stats = {
 #Dictionary for class_select() function
 #Arrays are filled with character stats and their corresponding constructor
 class_stats = {
-    "Mage":[50,5,5,20,15,5,100,0, Mage],
+    "Mage":[50,5,15,20,15,5,100,0, Mage],
     "Thief":[75, 15, 20, 35, 30, 25, 65, 0, Thief],
     "Warrior":[100, 25, 35, 15, 5, 5, 35, 0, Warrior],
     "Darklord":[80, 20, 25, 20, 5, 5, 70, 0, Darklord]
@@ -72,6 +74,7 @@ def player_turn():
         if choice=="Item":
             item()
 
+
 def attack():
     pass
 
@@ -90,6 +93,13 @@ def skeleton_minion():
 #Contains Core Game Loop
 def main():
 
+    enemy_stat = Enemy(10,10,10,10,10,10,10)
+    bat = Bat_Benny(enemy_stat)
+
+
+
+
+
     intro()
 
     player = class_select()
@@ -100,7 +110,9 @@ def main():
     #While The Player is not Dead
     #enemy = enemy_select()
     #start the battle between player and enemy
-    #
+    player.attack_enemy(bat)
+
+    print(bat.stats.health)
 
 #This is just gonna be a bunch of prints to tell players how the game works
 def intro():

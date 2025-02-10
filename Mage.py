@@ -15,4 +15,4 @@ class Mage():
     
     def attack_enemy(self, enemy:Enemy):
         print("You attack " + enemy.name)
-        self.stats.attack_enemy(enemy)
+        self.stats.attack_enemy(enemy.stats)

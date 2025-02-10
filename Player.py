@@ -25,4 +25,4 @@ class Player():
             print(f"{item}: {self.items[item]}")
     
     def attack_enemy(self, enemy:Enemy):
-        enemy.health -= max(self.attack - enemy.defense)
+        enemy.health -= max(0,self.attack - enemy.defense)
