@@ -112,6 +112,33 @@ def enemy_turn():
 def skeleton_minion():
     pass
 
+
+def wait_for_user_input():
+    while True:
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+                  pygame.quit()
+                  sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                print("Yo")
+                pygame.display.flip()
+                return 
+            pass
+        pass
+    pass
+#Text on screen because I am stupid, we can hopefully copy and paste this stuff
+class text_box():
+    def __init__(self, text):
+        self.text = text
+    def draw_text_box(screen):
+        pygame.draw.rect(screen,WHITE,(25,300,750,150),2)
+    def draw_text(screen,text):
+        font = pygame.font.Font(None, 36)
+        text = font.render(str(text), True, WHITE)
+        screen.blit(text,(40,325))
+    pass
+
 #Screen.blit for what we're drawing on top of text box and text is a string and where we're putting it
 def battle_pass_through_text(screen,text,x,y):
     font = pygame.font.Font(None, 36)
@@ -120,6 +147,7 @@ def battle_pass_through_text(screen,text,x,y):
 
 #Contains Core Game Loop
 #Sorry Daniel I have to change a bit of this to show some stuff properly cause pygame needs to run within this :)
+
 def main():
     #Showing the game window itself
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
@@ -130,11 +158,19 @@ def main():
     enemy_stat = Enemy(10,10,10,10,10,10,10)
     bat = Bat_Benny(enemy_stat)
 
+
     #Clock object in order to set the frame rate
     clock = pygame.time.Clock()
     #Loop for the game to work
+    
+    #Intro
+    intro(screen,clock)
+    
     while True:
+        
         screen.fill(BLACK)
+        text_box.draw_text_box(screen)
+        
         for event in pygame.event.get():
             #This is basically going to handle any player input, right now it only checks for the X at the windows bar is pressed to exit
             #out the game
@@ -143,7 +179,8 @@ def main():
                   sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    battle_pass_through_text(screen,"It's benny's time to shine", WIDTH//2-100, HEIGHT//2-100)
+                    print("Is this thing on?")
+                    text_box.draw_text(screen, "Hi!")
                 if event.key == pygame.K_RIGHT:
                     battle_pass_through_text(screen,"It's my time to shine!", WIDTH/2, HEIGHT/2)
         #It's like godot with delta, 
@@ -152,6 +189,8 @@ def main():
         pygame.display.flip()
         #60ms per frame
         clock.tick(60)
+        wait_for_user_input()
+        print("It went too far")
                     
 
 
@@ -172,9 +211,22 @@ def main():
 
 
 #This is just gonna be a bunch of prints to tell players how the game works
-def intro():
-    print("Welcome to Super Benny RPG!!")
-    print()
+#This is just getting text to display, it's a little weird but I'm working on it still
+def intro(surface,timer):
+    text_box.draw_text_box(surface)
+    text_box.draw_text(surface,"Welcome to SUPER BENNY RPG!")
+    timer.tick(60)
+    pygame.display.flip()
+    wait_for_user_input()
+    
+
+    surface.fill(BLACK)
+    text_box.draw_text_box(surface)
+    text_box.draw_text(surface,"Hi!")
+    
+    timer.tick(60)
+    pygame.display.flip()
+    wait_for_user_input()
 
 
 #Checks if smth smth (I act don't know, I just see people do this all the time)
