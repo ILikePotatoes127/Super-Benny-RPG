@@ -120,7 +120,24 @@ def player_turn():
             item()
 
 
-def attack():
+def attack(screen, Turn, player_stats, enemy_stats):
+    if Turn:
+        print("it did happen")
+        damage = player_stats.stats.attack
+        text_dmg = str(damage)
+        text_box.draw_text(screen, "You did " + text_dmg + " damage!")
+
+        damage = enemy_stats.stats.attack
+        print(enemy_stats.stats.health)
+        enemy_stats.stats.health -= damage
+        
+    else:
+        print("it didn't happen")
+        text_box.draw_text(screen, "The enemy attacks back!")
+        
+        damage = enemy_stats.stats.attack
+        player_stats.stats.health -= damage
+        pass
     pass
 
 def skill():
@@ -129,8 +146,16 @@ def skill():
 def item():
     pass
 
+
 def enemy_turn():
     pass
+
+def check_if_dead(stats):
+    if stats <= 0:
+        return True
+    else:
+        return False
+
 
 def skeleton_minion():
     pass
@@ -156,9 +181,9 @@ class text_box():
         self.text = text
     def draw_text_box(screen):
         pygame.draw.rect(screen,WHITE,(25,300,750,150),2)
-    def draw_text(screen,text,timer):
+    def draw_text(screen,text):
         #Read this as put text box in, and then draw the text
-        #Advance the frames, and update the display and then wait for user to press space again
+        #update the display and then wait for user to press space again
         #Also fill surface because if you don't it ends up not getting rid of the previous text
         #text_box.draw_text_box(surface)
         screen.fill(BLACK)
@@ -166,7 +191,6 @@ class text_box():
         font = pygame.font.Font(None, 36)
         text = font.render(str(text), True, WHITE)
         screen.blit(text,(40,325))
-        timer.tick(60)
         pygame.display.flip()
         wait_for_user_input()
     def class_text(screen, text,x,y):
@@ -179,7 +203,10 @@ class text_box():
         text = font.render(f"{stat} health",True, WHITE)
         screen.blit(text,(x,y))
         pygame.display.flip()
-
+    def update_screen(screen):
+        screen.fill(BLACK)
+        pygame.display.flip()
+        pass
     pass
 '''
 #Edit, we're probably not using this anymore
@@ -193,6 +220,33 @@ class text_box():
 #Contains Core Game Loop
 #Sorry Daniel I have to change a bit of this to show some stuff properly cause pygame needs to run within this :)
 
+def player_choice_ui(screen):
+    text_box.class_text(screen, "Attack", 10,350)
+    text_box.class_text(screen, "S", 10,400)
+    text_box.class_text(screen, "Skill", 180,350)
+    text_box.class_text(screen, "D", 180,400)
+    text_box.class_text(screen, "Item", 360,350)
+    text_box.class_text(screen, "F", 360,400)
+    
+    pygame.display.flip()
+
+#Player input for battle options, this is garbage, really.
+def player_input():
+    while True:
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                return "Attack"
+            if event.key == pygame.K_d:
+                break
+            if event.key == pygame.K_h:
+                break
+            pass
+        pass
+
 def main():
     #Showing the game window itself
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
@@ -200,7 +254,7 @@ def main():
     #Title being visible for the game 
     pygame.display.set_caption("Super Benny RPG - The game for you and me!")
 
-    enemy_stat = Enemy(10,10,10,10,10,10,10)
+    enemy_stat = Enemy(100,10,10,10,10,10,10)
     bat = Bat_Benny(enemy_stat)
 
 
@@ -227,14 +281,47 @@ def main():
     #Battle sequence
     screen.fill(BLACK)
     text_box.print_player_stats(screen, str(player.stats.health),0,0)
-    wait_for_user_input()
-    print(player.stats.health)
-
+    player_choice_ui(screen)
+    
+    
+    player_choice_ui(screen)
+    PlayerTurn = True
     while True:
         
-        pygame.quit()
-        sys.exit()
+        while PlayerTurn:
+            screen.fill(BLACK)
+            text_box.print_player_stats(screen, str(player.stats.health),0,0)
+            player_choice_ui(screen)
+
+            action = player_input()
+            if action == "Attack":
+                attack(screen, PlayerTurn, player, bat)
+                if check_if_dead(bat.stats.health):
+                    break
+                PlayerTurn = False
+                pass
+
+        while not PlayerTurn:
+            text_box.update_screen(screen)
+            
+            attack(screen, PlayerTurn, player, bat)
+            text_box.print_player_stats(screen, str(player.stats.health),0,0)
+
+            PlayerTurn = True
+            pass
+        if check_if_dead(bat.stats.health):
+            print("You killed the bat benny")
+            text_box.draw_text(screen, "You killed the bat benny!")
+            text_box.draw_text(screen, "You won!")
+            break
+        elif check_if_dead(player.stats.health):
+            text_box.draw_text(screen, "You died!")
+            text_box.draw_text(screen, "Game over")
+            break
+
+              
         pass
+
     '''
         #It's like godot with delta, 
         delta_time = clock.get_rawtime()
@@ -266,8 +353,8 @@ def main():
 #This is just gonna be a bunch of prints to tell players how the game works
 #This is just getting text to display, it's a little weird but I'm working on it still
 def intro(surface,timer):
-    text_box.draw_text(surface,"Welcome to SUPER BENNY RPG!",timer)
-    text_box.draw_text(surface,"Choose your class!",timer)
+    text_box.draw_text(surface,"Welcome to SUPER BENNY RPG!")
+    text_box.draw_text(surface,"Choose your class!")
     
 
 
