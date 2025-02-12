@@ -74,6 +74,7 @@ def class_select():
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
+            #So scuffed, press S for mage, d for Thief, h for Warrior and j for Darklord, we can fix this later
             if event.key == pygame.K_s:
                 rpg_class = "Mage"
                 break
@@ -86,9 +87,7 @@ def class_select():
             pass
         pass
 
-    print("its goin!")
     if rpg_class in class_stats:
-        print("It's workin!")
         c = class_stats[rpg_class]
         stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], basic_items)
         class_constructor = c[8]
@@ -175,6 +174,12 @@ class text_box():
         text = font.render(str(text), True, WHITE)
         screen.blit(text,(x,y))
         pass
+    def print_player_stats(screen,stat,x,y):
+        font = pygame.font.Font(None, 36)
+        text = font.render(f"{stat} health",True, WHITE)
+        screen.blit(text,(x,y))
+        pygame.display.flip()
+
     pass
 
 #Edit, we're probably not using this anymore
@@ -205,12 +210,30 @@ def main():
     
     #Intro
     intro(screen,clock)
+    screen.fill(BLACK)
+    #Asks you to choose a class, can optimize this later
     text_box.class_text(screen, "Mage Benny", 10,350)
-    text_box.class_text(screen, "Thief Benny", 45,350)
-    text_box.class_text(screen, "Warrior Benny", 70,350)
-    text_box.class_text(screen, "Darklord Benny", 105,350)
+    text_box.class_text(screen, "S", 10,400)
+    text_box.class_text(screen, "Thief Benny", 180,350)
+    text_box.class_text(screen, "D", 180,400)
+    text_box.class_text(screen, "Warrior Benny", 360,350)
+    text_box.class_text(screen, "H", 360,400)
+    text_box.class_text(screen, "Darklord Benny", 590,350)
+    text_box.class_text(screen, "J", 590,400)
     pygame.display.flip()
     player = class_select()
+    #Battle sequence
+    screen.fill(BLACK)
+    text_box.print_player_stats(screen, str(player.stats.health),0,0)
+    wait_for_user_input()
+    print(player.stats.health)
+
+    while True:
+        
+        pygame.quit()
+        sys.exit()
+        pass
+    '''
     while True:
         
         screen.fill(BLACK)
@@ -254,7 +277,7 @@ def main():
 
     print(bat.stats.health)
     clock.tick(60)
-
+    '''
 
 #This is just gonna be a bunch of prints to tell players how the game works
 #This is just getting text to display, it's a little weird but I'm working on it still

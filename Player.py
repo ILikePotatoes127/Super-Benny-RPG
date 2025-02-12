@@ -26,3 +26,6 @@ class Player():
     
     def attack_enemy(self, enemy:Enemy):
         enemy.health -= max(0,self.attack - enemy.defense)
+    
+    def get_health(self):
+        return self.health

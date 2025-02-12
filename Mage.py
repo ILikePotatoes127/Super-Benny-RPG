@@ -16,3 +16,7 @@ class Mage():
     def attack_enemy(self, enemy:Enemy):
         print("You attack " + enemy.name)
         self.stats.attack_enemy(enemy.stats)
+    
+    #The one in player doesn't work - Miguel
+    def get_health(self):
+        return str(self.stats.health)
