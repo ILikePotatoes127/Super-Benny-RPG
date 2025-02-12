@@ -7,6 +7,28 @@ from Bat_Benny import *
 
 import math
 
+
+#initiation for py game so that we can call any library stuff
+import pygame
+import sys
+import random
+pygame.init()
+
+#Canvas for the window size in pygame, can be readjusted later, they're constants for now
+#We put this in MAIN for it to work
+#We also define black to draw the background black
+WIDTH = 800
+HEIGHT = 500
+
+#Colors for background and textbox
+BLACK = (0, 0, 0)
+WHITE = (255,255,255)
+#COLORS = (R,G,B)
+
+
+
+
+
 #Dictionary for enemy_select() function
 #Arrays are filleed with character stats and their corresponding constructor
 enemy_stats = {
@@ -90,14 +112,47 @@ def enemy_turn():
 def skeleton_minion():
     pass
 
+#Screen.blit for what we're drawing on top of text box and text is a string and where we're putting it
+def battle_pass_through_text(screen,text,x,y):
+    font = pygame.font.Font(None, 36)
+    text = font.render(str(text), True, WHITE)
+    screen.blit(text,(x,y))
+
 #Contains Core Game Loop
+#Sorry Daniel I have to change a bit of this to show some stuff properly cause pygame needs to run within this :)
 def main():
+    #Showing the game window itself
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+
+    #Title being visible for the game 
+    pygame.display.set_caption("Super Benny RPG")
 
     enemy_stat = Enemy(10,10,10,10,10,10,10)
     bat = Bat_Benny(enemy_stat)
 
-
-
+    #Clock object in order to set the frame rate
+    clock = pygame.time.Clock()
+    #Loop for the game to work
+    while True:
+        screen.fill(BLACK)
+        for event in pygame.event.get():
+            #This is basically going to handle any player input, right now it only checks for the X at the windows bar is pressed to exit
+            #out the game
+            if event.type == pygame.QUIT:
+                  pygame.quit()
+                  sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    battle_pass_through_text(screen,"It's benny's time to shine", WIDTH//2-100, HEIGHT//2-100)
+                if event.key == pygame.K_RIGHT:
+                    battle_pass_through_text(screen,"It's my time to shine!", WIDTH/2, HEIGHT/2)
+        #It's like godot with delta, 
+        delta_time = clock.get_rawtime()
+        #Updates display
+        pygame.display.flip()
+        #60ms per frame
+        clock.tick(60)
+                    
 
 
     intro()
@@ -113,6 +168,8 @@ def main():
     player.attack_enemy(bat)
 
     print(bat.stats.health)
+    clock.tick(60)
+
 
 #This is just gonna be a bunch of prints to tell players how the game works
 def intro():
