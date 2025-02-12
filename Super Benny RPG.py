@@ -181,7 +181,7 @@ class text_box():
         pygame.display.flip()
 
     pass
-
+'''
 #Edit, we're probably not using this anymore
 
 #Screen.blit for what we're drawing on top of text box and text is a string and where we're putting it
@@ -189,7 +189,7 @@ class text_box():
 #    font = pygame.font.Font(None, 36)
 #    text = font.render(str(text), True, WHITE)
 #    screen.blit(text,(x,y))
-
+'''
 #Contains Core Game Loop
 #Sorry Daniel I have to change a bit of this to show some stuff properly cause pygame needs to run within this :)
 
@@ -211,6 +211,7 @@ def main():
     #Intro
     intro(screen,clock)
     screen.fill(BLACK)
+
     #Asks you to choose a class, can optimize this later
     text_box.class_text(screen, "Mage Benny", 10,350)
     text_box.class_text(screen, "S", 10,400)
@@ -222,6 +223,7 @@ def main():
     text_box.class_text(screen, "J", 590,400)
     pygame.display.flip()
     player = class_select()
+
     #Battle sequence
     screen.fill(BLACK)
     text_box.print_player_stats(screen, str(player.stats.health),0,0)
@@ -234,24 +236,6 @@ def main():
         sys.exit()
         pass
     '''
-    while True:
-        
-        screen.fill(BLACK)
-        text_box.draw_text_box(screen)
-        
-        for event in pygame.event.get():
-            #This is basically going to handle any player input, right now it only checks for the X at the windows bar is pressed to exit
-            #out the game
-            if event.type == pygame.QUIT:
-                  pygame.quit()
-                  sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    print("Is this thing on?")
-                    text_box.draw_text(screen, "Hi!")
-                if event.key == pygame.K_RIGHT:
-                    pass
-                    #battle_pass_through_text(screen,"It's my time to shine!", WIDTH/2, HEIGHT/2)
         #It's like godot with delta, 
         delta_time = clock.get_rawtime()
         #Updates display
