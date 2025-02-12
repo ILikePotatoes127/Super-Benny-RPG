@@ -53,6 +53,7 @@ class_stats = {
 }
 
 #Returns a player under a specific class depending on their input.
+#Edited this to display in pygame, commented out code that might make the game hang
 def class_select():
     #Dictionary that holds all item variants
     basic_items = {
@@ -61,12 +62,33 @@ def class_select():
         "Speed Potion": 0,
         "Strength Potion": 0
     }
+    
+    #print("Choose your class (Type in one of the following to choose): ")
+    #print("Mage, Thief, Warrior, Darklord")
+    #rpg_class = input()
+    rpg_class = None
+    #Horrifying loop
+    while rpg_class == None:
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                rpg_class = "Mage"
+                break
+            if event.key == pygame.K_d:
+                break
+            if event.key == pygame.K_h:
+                break
+            if event.key == pygame.K_j:
+                break
+            pass
+        pass
 
-    print("Choose your class (Type in one of the following to choose): ")
-    print("Mage, Thief, Warrior, Darklord")
-    rpg_class = input()
-
+    print("its goin!")
     if rpg_class in class_stats:
+        print("It's workin!")
         c = class_stats[rpg_class]
         stats = Player(c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], basic_items)
         class_constructor = c[8]
@@ -75,6 +97,8 @@ def class_select():
     else:
         return class_select()
 
+
+#Alternate class_select for visuals in pygame, it's a little stupid
 
 
 def battle():
@@ -112,7 +136,7 @@ def enemy_turn():
 def skeleton_minion():
     pass
 
-
+#Delay because it pygame is so good at being pygame it can potentially skip over text
 def wait_for_user_input():
     while True:
         event = pygame.event.wait()
@@ -122,28 +146,44 @@ def wait_for_user_input():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 print("Yo")
-                pygame.display.flip()
                 return 
             pass
         pass
     pass
+
 #Text on screen because I am stupid, we can hopefully copy and paste this stuff
 class text_box():
     def __init__(self, text):
         self.text = text
     def draw_text_box(screen):
         pygame.draw.rect(screen,WHITE,(25,300,750,150),2)
-    def draw_text(screen,text):
+    def draw_text(screen,text,timer):
+        #Read this as put text box in, and then draw the text
+        #Advance the frames, and update the display and then wait for user to press space again
+        #Also fill surface because if you don't it ends up not getting rid of the previous text
+        #text_box.draw_text_box(surface)
+        screen.fill(BLACK)
+        text_box.draw_text_box(screen)
         font = pygame.font.Font(None, 36)
         text = font.render(str(text), True, WHITE)
         screen.blit(text,(40,325))
+        timer.tick(60)
+        pygame.display.flip()
+        wait_for_user_input()
+    def class_text(screen, text,x,y):
+        font= pygame.font.Font(None, 36)
+        text = font.render(str(text), True, WHITE)
+        screen.blit(text,(x,y))
+        pass
     pass
 
+#Edit, we're probably not using this anymore
+
 #Screen.blit for what we're drawing on top of text box and text is a string and where we're putting it
-def battle_pass_through_text(screen,text,x,y):
-    font = pygame.font.Font(None, 36)
-    text = font.render(str(text), True, WHITE)
-    screen.blit(text,(x,y))
+#def battle_pass_through_text(screen,text,x,y):
+#    font = pygame.font.Font(None, 36)
+#    text = font.render(str(text), True, WHITE)
+#    screen.blit(text,(x,y))
 
 #Contains Core Game Loop
 #Sorry Daniel I have to change a bit of this to show some stuff properly cause pygame needs to run within this :)
@@ -153,7 +193,7 @@ def main():
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
     #Title being visible for the game 
-    pygame.display.set_caption("Super Benny RPG")
+    pygame.display.set_caption("Super Benny RPG - The game for you and me!")
 
     enemy_stat = Enemy(10,10,10,10,10,10,10)
     bat = Bat_Benny(enemy_stat)
@@ -165,7 +205,12 @@ def main():
     
     #Intro
     intro(screen,clock)
-    
+    text_box.class_text(screen, "Mage Benny", 10,350)
+    text_box.class_text(screen, "Thief Benny", 45,350)
+    text_box.class_text(screen, "Warrior Benny", 70,350)
+    text_box.class_text(screen, "Darklord Benny", 105,350)
+    pygame.display.flip()
+    player = class_select()
     while True:
         
         screen.fill(BLACK)
@@ -182,7 +227,8 @@ def main():
                     print("Is this thing on?")
                     text_box.draw_text(screen, "Hi!")
                 if event.key == pygame.K_RIGHT:
-                    battle_pass_through_text(screen,"It's my time to shine!", WIDTH/2, HEIGHT/2)
+                    pass
+                    #battle_pass_through_text(screen,"It's my time to shine!", WIDTH/2, HEIGHT/2)
         #It's like godot with delta, 
         delta_time = clock.get_rawtime()
         #Updates display
@@ -213,20 +259,9 @@ def main():
 #This is just gonna be a bunch of prints to tell players how the game works
 #This is just getting text to display, it's a little weird but I'm working on it still
 def intro(surface,timer):
-    text_box.draw_text_box(surface)
-    text_box.draw_text(surface,"Welcome to SUPER BENNY RPG!")
-    timer.tick(60)
-    pygame.display.flip()
-    wait_for_user_input()
+    text_box.draw_text(surface,"Welcome to SUPER BENNY RPG!",timer)
+    text_box.draw_text(surface,"Choose your class!",timer)
     
-
-    surface.fill(BLACK)
-    text_box.draw_text_box(surface)
-    text_box.draw_text(surface,"Hi!")
-    
-    timer.tick(60)
-    pygame.display.flip()
-    wait_for_user_input()
 
 
 #Checks if smth smth (I act don't know, I just see people do this all the time)
