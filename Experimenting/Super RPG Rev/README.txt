@@ -1,0 +1,3 @@
+This is just an experiment on trying to make it visually look a little better, but the code might be a little easier to go through this time because I actually know what I'm doing this time so oops, but yeah it's your call on what we do, this one basically might be better but I'll see.
+
+Anyway, for sprites we'll see I don't know what we really wanna do anything about that but I GUESS some of us have to.
