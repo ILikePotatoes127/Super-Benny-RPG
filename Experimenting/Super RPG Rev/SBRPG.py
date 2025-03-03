@@ -167,7 +167,8 @@ def setPlayerStats(playerClass):
 
 def setEnemyStats():
     #we can probably set the enemy sprite here too
-    #Just use rand int bro it's not that hard 
+    #Just use rand int bro it's not that hard
+    global enemyStats
     enemyStats = [20,10,5,5,1]
 
 class battleScene():
@@ -184,7 +185,23 @@ class battleScene():
         screen.blit(headerText,(50,20))
         pygame.display.update()
         clock.tick(60)
-    
+    def battleLogic():
+        global playerStats
+        global enemyStats
+        eSpeed = enemyStats[-1]
+        pSpeed = playerStats[-1]
+        isPlayerTurn = True
+        if eSpeed > pSpeed:
+            isPlayerTurn = False
+        elif pSpeed > eSpeed:
+            isPlayerTurn = True
+        else:
+            is PlayerTurn = True
+        while True:
+            while isPlayerTurn:
+                pass
+            while !isPlayerTurn:
+            pass
     
 #Scuffed
 def screenTransition():
