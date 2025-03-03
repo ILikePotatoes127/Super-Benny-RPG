@@ -23,19 +23,22 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerstats, enemystats, wallet
-
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite
+    playerStats = []
+    enemyStats = []
     pygame.init()
     font = pygame.font.Font("Fonts/BennyFont.ttf", 24)
+    battleUIFont = pygame.font.Font("Fonts/BennyFont.ttf", 16)
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
     transitionScreen = pygame.display.set_mode((WIDTH,HEIGHT))
     clock = pygame.time.Clock()
     pygame.display.set_caption("Super Benny RPG!")
     delta = clock.tick(FPS)/100
+    introGame()
+    chooseYourBenny()
     while True:
-        introGame()
-        chooseYourBenny()
-
+        battleScene.battleUI(playerStats,enemyStats)
+        
 def checkKey():
     if len(pygame.event.get(QUIT)) > 0:
         terminate()
@@ -105,6 +108,19 @@ def chooseYourBenny():
     currentChoice = "MAGE"
     while True:
         screen.fill(BLACK)
+        #Make the arrows move to make the selection obvious
+        time = pygame.time.get_ticks()/1000
+        sizeOne = math.sin(time) * 5
+        sizeOne = int(sizeOne)
+        #Header needs to be in front of the screenfill LOL
+        headerText = headerFont.render(textHeader, False, WHITE)
+        screen.blit(headerText,(-300+newPos,20+sizeOne))
+        #Draws the triangle selection
+        pygame.draw.polygon(screen,WHITE,[(20+sizeOne,400),(20+sizeOne,450),(60+sizeOne,425)])
+        pygame.draw.line(screen, WHITE, (-300,70),(800,70))
+        choiceText = headerFont.render(currentChoice, False, WHITE)
+        screen.blit(choiceText,(80+sizeOne,415))
+        
         #LOL
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -127,33 +143,55 @@ def chooseYourBenny():
                 elif (event.key == K_LEFT) and currentChoice == "DARKLORD":
                     currentChoice = "THIEF"
                 elif (event.key == K_SPACE):
-                    #Record player current choice and pass it into another function for stats
-                    pass
+                    setPlayerStats(currentChoice)
+                    setEnemyStats()
+                    screenTransition()
+                    return
                 elif event.key == K_ESCAPE:
                     terminate()
-        
-        #Make the arrows move to make the selection obvious
-        time = pygame.time.get_ticks()/1000
-        sizeOne = math.sin(time) * 5
-        sizeOne = int(sizeOne)
-        #Header needs to be in front of the screenfill LOL
-        headerText = headerFont.render(textHeader, False, WHITE)
-        screen.blit(headerText,(-300+newPos,20+sizeOne))
-        #Draws the triangle selection
-        pygame.draw.polygon(screen,WHITE,[(20+sizeOne,400),(20+sizeOne,450),(60+sizeOne,425)])
-        pygame.draw.line(screen, WHITE, (-300,70),(800,70))
-        choiceText = headerFont.render(currentChoice, False, WHITE)
-        screen.blit(choiceText,(80+sizeOne,415))
+    
         pygame.display.update()
         clock.tick(60)
 
+def setPlayerStats(playerClass):
+    global playerStats
+    #Sored as HP, MP, ATK, DEF, SPD
+    if playerClass == "MAGE":
+        playerStats = [50, 100, 10, 10, 20]
+    elif playerClass == "WARRIOR":
+        playerStats = [100, 20, 30, 20, 30]
+    elif playerClass == "THIEF":
+        playerStats = [75, 40, 15, 15, 50]
+    elif playerClass == "DARKLORD":
+        playerStats = [80, 70, 20, 15, 30]
 
+def setEnemyStats():
+    #we can probably set the enemy sprite here too
+    #Just use rand int bro it's not that hard 
+    enemyStats = [20,10,5,5,1]
+
+class battleScene():
+    def battleUI(pStat,eStat):
+        #Print player stats
+        screen.fill(BLACK)
+        #HP
+        toPrint = str(pStat[0])
+        headerText = battleUIFont.render(toPrint, False, WHITE)
+        screen.blit(headerText,(20,20))
+        #MP
+        toPrint = str(pStat[1])
+        headerText = battleUIFont.render(toPrint, False, WHITE)
+        screen.blit(headerText,(50,20))
+        pygame.display.update()
+        clock.tick(60)
+    
+    
 #Scuffed
 def screenTransition():
-    currSize = 10
-    for i in range(50):
+    currSize = 25
+    for k in range(50):
         currSize += 25
-        pygame.draw.circle(transitionScreen, BLACK, (400,200),currSize,0)
+        pygame.draw.circle(screen, BLACK, (400,200),currSize,0)
         pygame.display.update()
         clock.tick(60)
         
