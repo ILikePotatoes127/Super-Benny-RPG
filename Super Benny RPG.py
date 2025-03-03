@@ -356,6 +356,7 @@ def intro(surface,timer):
     text_box.draw_text(surface,"Welcome to SUPER BENNY RPG!")
     text_box.draw_text(surface,"Choose your class!")
     
+    
 
 
 #Checks if smth smth (I act don't know, I just see people do this all the time)
