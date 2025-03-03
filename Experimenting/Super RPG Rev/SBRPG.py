@@ -23,7 +23,7 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen
+    global clock, screen, font, delta, transitionScreen, playerstats, enemystats, wallet
 
     pygame.init()
     font = pygame.font.Font("Fonts/BennyFont.ttf", 24)
@@ -101,12 +101,52 @@ def chooseYourBenny():
         screen.blit(headerText,(-300+newPos,20))
         pygame.display.update()
         clock.tick(60)
-    #To do, make a benny select thing in the while function with a cursor pointing to the different benny types
+
+    currentChoice = "MAGE"
     while True:
-        if checkKey():
-            pygame.event.get()
-            return
+        screen.fill(BLACK)
+        #LOL
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            elif event.type == KEYDOWN:
+                if (event.key == K_RIGHT) and currentChoice == "MAGE":
+                    currentChoice = "WARRIOR"
+                elif (event.key == K_RIGHT) and currentChoice == "WARRIOR":
+                    currentChoice = "THIEF"
+                elif (event.key == K_RIGHT) and currentChoice == "THIEF":
+                    currentChoice = "DARKLORD"
+                elif (event.key == K_RIGHT) and currentChoice == "DARKLORD":
+                    currentChoice = "MAGE"
+                elif (event.key == K_LEFT) and currentChoice == "MAGE":
+                    currentChoice = "DARKLORD"
+                elif (event.key == K_LEFT) and currentChoice == "WARRIOR":
+                    currentChoice = "MAGE"
+                elif (event.key == K_LEFT) and currentChoice == "THIEF":
+                    currentChoice = "WARRIOR"
+                elif (event.key == K_LEFT) and currentChoice == "DARKLORD":
+                    currentChoice = "THIEF"
+                elif (event.key == K_SPACE):
+                    #Record player current choice and pass it into another function for stats
+                    pass
+                elif event.key == K_ESCAPE:
+                    terminate()
         
+        #Make the arrows move to make the selection obvious
+        time = pygame.time.get_ticks()/1000
+        sizeOne = math.sin(time) * 5
+        sizeOne = int(sizeOne)
+        #Header needs to be in front of the screenfill LOL
+        headerText = headerFont.render(textHeader, False, WHITE)
+        screen.blit(headerText,(-300+newPos,20+sizeOne))
+        #Draws the triangle selection
+        pygame.draw.polygon(screen,WHITE,[(20+sizeOne,400),(20+sizeOne,450),(60+sizeOne,425)])
+        pygame.draw.line(screen, WHITE, (-300,70),(800,70))
+        choiceText = headerFont.render(currentChoice, False, WHITE)
+        screen.blit(choiceText,(80+sizeOne,415))
+        pygame.display.update()
+        clock.tick(60)
+
 
 #Scuffed
 def screenTransition():
