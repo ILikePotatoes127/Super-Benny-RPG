@@ -210,16 +210,65 @@ class battleScene():
     def battleBG():
         pygame.draw.rect(screen, BATTLEBG, [(10,60),(780,270)])
 
+    def playerAttack():
+        #Sored as HP, MP, ATK, DEF, SPD as a reminder
+        global enemyStats
+        global playerStats
+        playerDamage = playerStats[2]
+        enemyDefense = enemyStats[3]
+        damage = playerDamage - random.randint(enemyDefense-3,enemyDefense)
+        print(damage)
+        #Attack anim function here depending on the player global class
+        #class attack anim()
+        Textbox = "You did " + str(damage) + " damage"
+        pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
+        pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
+        pygame.display.update()
+        clock.tick(30)
+        textDraw = ""        
+        for i in range(len(Textbox)):
+            textDraw += Textbox[i]
+            uiUpdate = font.render(textDraw, True, WHITE)
+            screen.blit(uiUpdate, (30,390))
+            pygame.display.update()
+            clock.tick(30) 
+        while True:
+             for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    return
+                
+    def playerSkill():
+        global enemyStats
+        global playerStats
+        global playerClass
+        pass
+
+    def checkEnemyDead():
+        global enemyStats
+        pass
+    
+    def checkPlayerDead():
+        global playerStats
+        pass
+    
+    def playerItem():
+        pass
+    
     def playerAction(playerAct):
         global enemyStats
         global playerStats
         global playerItem
         if playerAct == "ATTACK":
-            pass
+            battleScene.playerAttack()
+            return True
         if playerAct == "SKILL" and playerStats[1]>=5:
-            pass
+            return True
         if playerAct == "ITEM" and playerItem != "NONE":
-            pass
+            return True
+        if playerAct == "ITEM" and playerItem == "NONE":
+            return False
 
     def playerCursor(choice):
         time = pygame.time.get_ticks()/1000
@@ -234,15 +283,18 @@ class battleScene():
         eSpeed = enemyStats[-1]
         pSpeed = playerStats[-1]
         isPlayerTurn = True
+        isPlayerChoiceValid = False
         if eSpeed > pSpeed:
             isPlayerTurn = False
         elif pSpeed > eSpeed:
             isPlayerTurn = True
         else:
             isPlayerTurn = True
+        #Basically a battle, wait can I do something better for this?
         while True:
             playerCommandOptions = ["ATTACK", "SKILL", "ITEM"]
             playerChoice = 0
+            #Player turn
             while isPlayerTurn:
                 screen.fill(BLACK)
                 battleScene.battleBG()
@@ -250,10 +302,8 @@ class battleScene():
                 for f in range(3):
                     playerChoiceText = battleUIFont.render(playerCommandOptions[f], True, WHITE)
                     screen.blit(playerChoiceText,(80,390+f*20))
-                commandPrompt = battleUIFont.render("Command", True, WHITE)
+                commandPrompt = battleUIFont.render("Commands", True, WHITE)
                 screen.blit(commandPrompt,(60,370))
-                playerChoiceText = battleUIFont.render(playerCommandOptions[playerChoice], True, WHITE)
-                screen.blit(playerChoiceText,(80,390))
                 battleScene.playerCursor(playerChoice)
                 for event in pygame.event.get():
                     if event.type == QUIT:
@@ -264,12 +314,17 @@ class battleScene():
                         elif (event.key == K_UP) and playerChoice > 0:
                             playerChoice -= 1
                         elif (event.key == K_SPACE):
-                            battleScene.playerAction(playerChoice)
+                            isPlayerChoiceValid = battleScene.playerAction(playerCommandOptions[playerChoice])
                         elif event.key == K_ESCAPE:
                             terminate()
                 pygame.display.update()
                 clock.tick(60)
+                if isPlayerChoiceValid:
+                    isPlayerTurn = False
+            #ENEMY Turn
             while not isPlayerTurn:
+                isPlayerTurn = True
+                isPlayerChoiceValid = False
                 pass
             pass
 
