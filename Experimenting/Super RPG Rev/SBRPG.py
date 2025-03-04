@@ -178,12 +178,12 @@ class battleScene():
         #Print player stats
         #HP
         toPrint = str(pStat[0])
-        headerText = battleUIFont.render(toPrint, False, WHITE)
-        screen.blit(headerText,(20,20))
+        headerText = battleUIFont.render("HP " + toPrint, False, WHITE)
+        screen.blit(headerText,(300,420))
         #MP
         toPrint = str(pStat[1])
-        headerText = battleUIFont.render(toPrint, False, WHITE)
-        screen.blit(headerText,(50,20))
+        headerText = battleUIFont.render("MP " +toPrint, False, WHITE)
+        screen.blit(headerText,(300,440))
         #pygame.display.update()
         #clock.tick(60)
         
@@ -225,6 +225,8 @@ class battleScene():
                 screen.fill(BLACK)
                 battleScene.battleBG()
                 battleScene.battleUI(playerStats,enemyStats)
+                commandPrompt = battleUIFont.render("Command", True, WHITE)
+                screen.blit(commandPrompt,(60,370))
                 playerChoiceText = battleUIFont.render(playerChoice, True, WHITE)
                 screen.blit(playerChoiceText,(80,390))
                 for event in pygame.event.get():
