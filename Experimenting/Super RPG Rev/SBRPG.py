@@ -24,7 +24,7 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount
     playerItem = "NONE"
     playerClass = "MAGE"
     playerStats = []
@@ -209,6 +209,17 @@ class battleScene():
             
     def battleBG():
         pygame.draw.rect(screen, BATTLEBG, [(10,60),(780,270)])
+
+    def playerAction(playerAct):
+        global enemyStats
+        global playerStats
+        global playerItem
+        if playerAct == "ATTACK":
+            pass
+        if playerAct == "SKILL" and playerStats[1]>=5:
+            pass
+        if playerAct == "ITEM" and playerItem != "NONE":
+            pass
     
     def battleLogic():
         battleScene.battleBGIntro()
@@ -250,8 +261,7 @@ class battleScene():
                         elif (event.key == K_LEFT) and playerChoice == "ITEM":
                             playerChoice = "SKILL"
                         elif (event.key == K_SPACE):
-                            pass
-                            #LOL
+                            battleScene.playerAction(playerChoice)
                         elif event.key == K_ESCAPE:
                             terminate()
                 pygame.display.update()
@@ -259,7 +269,7 @@ class battleScene():
             while not isPlayerTurn:
                 pass
             pass
-    
+
 #Scuffed
 def screenTransition():
     currSize = 25
