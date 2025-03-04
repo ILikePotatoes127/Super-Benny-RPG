@@ -41,6 +41,7 @@ def main():
     chooseYourBenny()
     while True:
         battleScene.battleLogic()
+        terminate()
         
 def checkKey():
     if len(pygame.event.get(QUIT)) > 0:
@@ -172,9 +173,10 @@ def setPlayerStats(playerSelect):
     playerClass = playerSelect
 
 def setEnemyStats():
-    #we can probably set the enemy sprite here too
-    #Just use rand int bro it's not that hard
+    global enemeySprite
+    global enemyName
     global enemyStats
+    enemyName = "TEMP BENNY"
     enemyStats = [20,10,5,5,1]
 
 class battleScene():
@@ -217,7 +219,6 @@ class battleScene():
         playerDamage = playerStats[2]
         enemyDefense = enemyStats[3]
         damage = playerDamage - random.randint(enemyDefense-3,enemyDefense)
-        print(damage)
         #Attack anim function here depending on the player global class
         #class attack anim()
         Textbox = "You did " + str(damage) + " damage"
@@ -225,13 +226,14 @@ class battleScene():
         pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
         pygame.display.update()
         clock.tick(30)
+        enemyStats[0] -= damage
         textDraw = ""        
         for i in range(len(Textbox)):
             textDraw += Textbox[i]
-            uiUpdate = font.render(textDraw, True, WHITE)
+            uiUpdate = battleUIFont.render(textDraw, True, WHITE)
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
-            clock.tick(30) 
+            clock.tick(60) 
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -240,17 +242,98 @@ class battleScene():
                     return
                 
     def playerSkill():
+        #Sored as HP, MP, ATK, DEF, SPD as a reminder
         global enemyStats
         global playerStats
         global playerClass
-        pass
+        cost = 5
+        playerDamage = playerStats[2]
+        enemyDefense = enemyStats[3]
+        damage = (playerDamage * 3) - random.randint(enemyDefense-3,enemyDefense)
+        #skill anim function here depending on the player global class
+        #class skill attack anim()
+        Textbox = "Used " + str(playerClass) + " skill to do " + str(damage) + " damage"
+        pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
+        pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
+        pygame.display.update()
+        clock.tick(30)
+        textDraw = ""
+        playerStats[1] -= 5
+        enemyStats[0] -= damage
+        for i in range(len(Textbox)):
+            textDraw += Textbox[i]
+            uiUpdate = battleUIFont.render(textDraw, True, WHITE)
+            screen.blit(uiUpdate, (30,390))
+            pygame.display.update()
+            clock.tick(60) 
+        while True:
+             for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    return
 
+    def enemyChatter():
+        global enemyName
+        Textbox = str(enemyName) + " lunges forward"
+        pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
+        pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
+        pygame.display.update()
+        clock.tick(30)
+        textDraw = ""
+        for i in range(len(Textbox)):
+            textDraw += Textbox[i]
+            uiUpdate = battleUIFont.render(textDraw, True, WHITE)
+            screen.blit(uiUpdate, (30,390))
+            pygame.display.update()
+            clock.tick(60)
+        while True:
+             for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    return
+    
+    def enemyAttack():
+        #Sored as HP, MP, ATK, DEF, SPD as a reminder
+        global enemyStats
+        global playerStats
+        global enemyName
+        enemyDamage = enemyStats[3] + 5
+        playerDefense = playerStats[2]
+        damage = (enemyDamage) - random.randint(playerDefense-3,playerDefense)
+        #idk maybe camera shake
+        Textbox = str(enemyName) + " does " + str(damage) + " damage"
+        pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
+        pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
+        pygame.display.update()
+        clock.tick(30)
+        textDraw = ""
+        playerStats[0] -= damage
+        for i in range(len(Textbox)):
+            textDraw += Textbox[i]
+            uiUpdate = battleUIFont.render(textDraw, True, WHITE)
+            screen.blit(uiUpdate, (30,390))
+            pygame.display.update()
+            clock.tick(60) 
+        while True:
+             for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    return
     def checkEnemyDead():
         global enemyStats
+        if enemyStats[0] <= 0:
+            enemyStats[0] = 0
+            return True
         pass
     
     def checkPlayerDead():
         global playerStats
+        if playerStats[0] <= 0:
+            playerStats[0] = 0
+            return True
         pass
     
     def playerItem():
@@ -264,6 +347,7 @@ class battleScene():
             battleScene.playerAttack()
             return True
         if playerAct == "SKILL" and playerStats[1]>=5:
+            battleScene.playerSkill()
             return True
         if playerAct == "ITEM" and playerItem != "NONE":
             return True
@@ -284,6 +368,9 @@ class battleScene():
         pSpeed = playerStats[-1]
         isPlayerTurn = True
         isPlayerChoiceValid = False
+        isEnemyDead = False
+        isPlayerDead = False
+        isBattle = True
         if eSpeed > pSpeed:
             isPlayerTurn = False
         elif pSpeed > eSpeed:
@@ -291,11 +378,11 @@ class battleScene():
         else:
             isPlayerTurn = True
         #Basically a battle, wait can I do something better for this?
-        while True:
+        while isBattle:
             playerCommandOptions = ["ATTACK", "SKILL", "ITEM"]
             playerChoice = 0
             #Player turn
-            while isPlayerTurn:
+            while isPlayerTurn and not isEnemyDead and not isPlayerDead:
                 screen.fill(BLACK)
                 battleScene.battleBG()
                 battleScene.battleUI(playerStats,enemyStats)
@@ -319,13 +406,25 @@ class battleScene():
                             terminate()
                 pygame.display.update()
                 clock.tick(60)
-                if isPlayerChoiceValid:
+                isEnemyDead = battleScene.checkEnemyDead()
+                if isPlayerChoiceValid and not isEnemyDead and not isPlayerDead:
                     isPlayerTurn = False
+                    print(enemyStats[0])
+                elif isPlayerChoiceValid and isEnemyDead:
+                    isPlayerTurn = False
+                    isBattle = False
             #ENEMY Turn
-            while not isPlayerTurn:
-                isPlayerTurn = True
-                isPlayerChoiceValid = False
-                pass
+            while not isPlayerTurn and not isEnemyDead:
+                battleScene.enemyChatter()
+                battleScene.enemyAttack()
+                if not isPlayerDead:
+                    isPlayerTurn = True
+                    isPlayerChoiceValid = False
+                elif isPlayerDead:
+                    isPlayerTurn = False
+                    isBattle = False
+            if isBattle == False:
+                break
             pass
 
 #Scuffed
