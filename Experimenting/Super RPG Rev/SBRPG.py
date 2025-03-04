@@ -24,7 +24,9 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass
+    playerItem = "NONE"
+    playerClass = "MAGE"
     playerStats = []
     enemyStats = []
     pygame.init()
@@ -105,7 +107,7 @@ def chooseYourBenny():
         screen.blit(headerText,(-300+newPos,20))
         pygame.display.update()
         clock.tick(60)
-
+        
     currentChoice = "MAGE"
     while True:
         screen.fill(BLACK)
@@ -154,18 +156,20 @@ def chooseYourBenny():
         pygame.display.update()
         clock.tick(60)
 
-def setPlayerStats(playerClass):
+def setPlayerStats(playerSelect):
     global playerStats
+    global playerClass
     #Sored as HP, MP, ATK, DEF, SPD
     #Mage speed is crazy turn it back after testing
-    if playerClass == "MAGE":
+    if playerSelect == "MAGE":
         playerStats = [50, 100, 10, 10, 100]
-    elif playerClass == "WARRIOR":
+    elif playerSelect == "WARRIOR":
         playerStats = [100, 20, 30, 20, 30]
-    elif playerClass == "THIEF":
+    elif playerSelect == "THIEF":
         playerStats = [75, 40, 15, 15, 50]
-    elif playerClass == "DARKLORD":
+    elif playerSelect == "DARKLORD":
         playerStats = [80, 70, 20, 15, 30]
+    playerClass = playerSelect
 
 def setEnemyStats():
     #we can probably set the enemy sprite here too
