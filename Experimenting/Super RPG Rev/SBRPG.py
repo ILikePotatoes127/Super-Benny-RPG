@@ -24,8 +24,9 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout
     playerItem = "NONE"
+    wallet = 0
     playerClass = "MAGE"
     playerStats = []
     enemyStats = []
@@ -176,8 +177,10 @@ def setEnemyStats():
     global enemeySprite
     global enemyName
     global enemyStats
+    global enemyPayout
     enemyName = "TEMP BENNY"
     enemyStats = [20,10,500,5,1]
+    enemyPayout = 20
 
 class battleScene():
     def battleUI(pStat,eStat):
@@ -327,17 +330,22 @@ class battleScene():
         if enemyStats[0] <= 0:
             enemyStats[0] = 0
             return True
-        pass
     
     def checkPlayerDead():
         global playerStats
         if playerStats[0] <= 0:
             playerStats[0] = 0
             return True
-        pass
     
     def playerItem():
         pass
+    
+    def battlePayOut():
+        global wallet
+        global enemyPayout
+        wallet += random.randint(enemyPayout-5,enemyPayout)
+
+
     
     def playerAction(playerAct):
         global enemyStats
@@ -359,6 +367,7 @@ class battleScene():
         sizeOne = math.sin(time) * 5
         sizeOne = int(sizeOne)
         pygame.draw.polygon(screen,WHITE,[(60+sizeOne,390+choice*20),(60+sizeOne,410+choice*20),(70+sizeOne,400+choice*20)])
+        
         
     def battleLogic():
         battleScene.battleBGIntro()
@@ -409,7 +418,6 @@ class battleScene():
                 isEnemyDead = battleScene.checkEnemyDead()
                 if isPlayerChoiceValid and not isEnemyDead and not isPlayerDead:
                     isPlayerTurn = False
-                    print(enemyStats[0])
                 elif isPlayerChoiceValid and isEnemyDead:
                     isPlayerTurn = False
                     isBattle = False
@@ -425,6 +433,8 @@ class battleScene():
                     isPlayerTurn = False
                     isBattle = False
             if isBattle == False:
+                if isEnemyDead:
+                    battleScene.battlePayOut()
                 break
             pass
 
