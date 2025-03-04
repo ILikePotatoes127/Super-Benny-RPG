@@ -177,7 +177,7 @@ def setEnemyStats():
     global enemyName
     global enemyStats
     enemyName = "TEMP BENNY"
-    enemyStats = [20,10,5,5,1]
+    enemyStats = [20,10,500,5,1]
 
 class battleScene():
     def battleUI(pStat,eStat):
@@ -299,8 +299,8 @@ class battleScene():
         global enemyStats
         global playerStats
         global enemyName
-        enemyDamage = enemyStats[3] + 5
-        playerDefense = playerStats[2]
+        enemyDamage = enemyStats[2] + 5
+        playerDefense = playerStats[3]
         damage = (enemyDamage) - random.randint(playerDefense-3,playerDefense)
         #idk maybe camera shake
         Textbox = str(enemyName) + " does " + str(damage) + " damage"
@@ -414,9 +414,10 @@ class battleScene():
                     isPlayerTurn = False
                     isBattle = False
             #ENEMY Turn
-            while not isPlayerTurn and not isEnemyDead:
+            while not isPlayerTurn and not isEnemyDead and not isPlayerDead:
                 battleScene.enemyChatter()
                 battleScene.enemyAttack()
+                isPlayerDead = battleScene.checkPlayerDead()
                 if not isPlayerDead:
                     isPlayerTurn = True
                     isPlayerChoiceValid = False
