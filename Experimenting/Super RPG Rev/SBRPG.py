@@ -220,7 +220,13 @@ class battleScene():
             pass
         if playerAct == "ITEM" and playerItem != "NONE":
             pass
-    
+
+    def playerCursor(choice):
+        time = pygame.time.get_ticks()/1000
+        sizeOne = math.sin(time) * 5
+        sizeOne = int(sizeOne)
+        pygame.draw.polygon(screen,WHITE,[(60+sizeOne,390+choice*20),(60+sizeOne,410+choice*20),(70+sizeOne,400+choice*20)])
+        
     def battleLogic():
         battleScene.battleBGIntro()
         global playerStats
@@ -235,31 +241,28 @@ class battleScene():
         else:
             isPlayerTurn = True
         while True:
-            playerChoice = "ATTACK"
+            playerCommandOptions = ["ATTACK", "SKILL", "ITEM"]
+            playerChoice = 0
             while isPlayerTurn:
                 screen.fill(BLACK)
                 battleScene.battleBG()
                 battleScene.battleUI(playerStats,enemyStats)
+                for f in range(3):
+                    playerChoiceText = battleUIFont.render(playerCommandOptions[f], True, WHITE)
+                    screen.blit(playerChoiceText,(80,390+f*20))
                 commandPrompt = battleUIFont.render("Command", True, WHITE)
                 screen.blit(commandPrompt,(60,370))
-                playerChoiceText = battleUIFont.render(playerChoice, True, WHITE)
+                playerChoiceText = battleUIFont.render(playerCommandOptions[playerChoice], True, WHITE)
                 screen.blit(playerChoiceText,(80,390))
+                battleScene.playerCursor(playerChoice)
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         terminate()
                     elif event.type == KEYDOWN:
-                        if (event.key == K_RIGHT) and playerChoice == "ATTACK":
-                            playerChoice = "SKILL"
-                        elif (event.key == K_RIGHT) and playerChoice == "SKILL":
-                            playerChoice = "ITEM"
-                        elif (event.key == K_RIGHT) and playerChoice == "ITEM":
-                            playerChoice = "ATTACK"
-                        elif (event.key == K_LEFT) and playerChoice == "ATTACK":
-                            playerChoice = "ITEM"
-                        elif (event.key == K_LEFT) and playerChoice == "SKILL":
-                            playerChoice = "ATTACK"
-                        elif (event.key == K_LEFT) and playerChoice == "ITEM":
-                            playerChoice = "SKILL"
+                        if (event.key == K_DOWN) and playerChoice < 2:
+                            playerChoice += 1
+                        elif (event.key == K_UP) and playerChoice > 0:
+                            playerChoice -= 1
                         elif (event.key == K_SPACE):
                             battleScene.playerAction(playerChoice)
                         elif event.key == K_ESCAPE:
