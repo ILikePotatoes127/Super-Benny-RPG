@@ -11,6 +11,7 @@ BLUE_SKY = (98,122,157)
 RED = (175, 54, 60)
 BLUE = (56,61,150)
 GREEN = (70,148,73)
+BATTLEBG = (0,77,64)
 #COLOR = (R,G,B) Add more if you want idk
 
 FPS = 30
@@ -23,7 +24,7 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName
     playerStats = []
     enemyStats = []
     pygame.init()
@@ -37,7 +38,7 @@ def main():
     introGame()
     chooseYourBenny()
     while True:
-        battleScene.battleUI(playerStats,enemyStats)
+        battleScene.battleLogic()
         
 def checkKey():
     if len(pygame.event.get(QUIT)) > 0:
@@ -156,8 +157,9 @@ def chooseYourBenny():
 def setPlayerStats(playerClass):
     global playerStats
     #Sored as HP, MP, ATK, DEF, SPD
+    #Mage speed is crazy turn it back after testing
     if playerClass == "MAGE":
-        playerStats = [50, 100, 10, 10, 20]
+        playerStats = [50, 100, 10, 10, 100]
     elif playerClass == "WARRIOR":
         playerStats = [100, 20, 30, 20, 30]
     elif playerClass == "THIEF":
@@ -174,7 +176,6 @@ def setEnemyStats():
 class battleScene():
     def battleUI(pStat,eStat):
         #Print player stats
-        screen.fill(BLACK)
         #HP
         toPrint = str(pStat[0])
         headerText = battleUIFont.render(toPrint, False, WHITE)
@@ -183,9 +184,30 @@ class battleScene():
         toPrint = str(pStat[1])
         headerText = battleUIFont.render(toPrint, False, WHITE)
         screen.blit(headerText,(50,20))
-        pygame.display.update()
-        clock.tick(60)
+        #pygame.display.update()
+        #clock.tick(60)
+        
+    def battleBGIntro():
+        targetHeight = 270
+        targetWidth = 780
+        newHeight = 60
+        newWidth = 10
+        while newHeight != targetHeight:
+            newHeight += 10
+            pygame.draw.rect(screen, BATTLEBG, [(10,60),(newWidth,newHeight)])
+            pygame.display.update()
+            clock.tick(60)
+        while newWidth != targetWidth:
+            newWidth += 10
+            pygame.draw.rect(screen, BATTLEBG, [(10,60),(newWidth,newHeight)])
+            pygame.display.update()
+            clock.tick(60)
+            
+    def battleBG():
+        pygame.draw.rect(screen, BATTLEBG, [(10,60),(780,270)])
+    
     def battleLogic():
+        battleScene.battleBGIntro()
         global playerStats
         global enemyStats
         eSpeed = enemyStats[-1]
@@ -196,11 +218,40 @@ class battleScene():
         elif pSpeed > eSpeed:
             isPlayerTurn = True
         else:
-            is PlayerTurn = True
+            isPlayerTurn = True
         while True:
+            playerChoice = "ATTACK"
             while isPlayerTurn:
+                screen.fill(BLACK)
+                battleScene.battleBG()
+                battleScene.battleUI(playerStats,enemyStats)
+                playerChoiceText = battleUIFont.render(playerChoice, True, WHITE)
+                screen.blit(playerChoiceText,(80,390))
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        terminate()
+                    elif event.type == KEYDOWN:
+                        if (event.key == K_RIGHT) and playerChoice == "ATTACK":
+                            playerChoice = "SKILL"
+                        elif (event.key == K_RIGHT) and playerChoice == "SKILL":
+                            playerChoice = "ITEM"
+                        elif (event.key == K_RIGHT) and playerChoice == "ITEM":
+                            playerChoice = "ATTACK"
+                        elif (event.key == K_LEFT) and playerChoice == "ATTACK":
+                            playerChoice = "ITEM"
+                        elif (event.key == K_LEFT) and playerChoice == "SKILL":
+                            playerChoice = "ATTACK"
+                        elif (event.key == K_LEFT) and playerChoice == "ITEM":
+                            playerChoice = "SKILL"
+                        elif (event.key == K_SPACE):
+                            pass
+                            #LOL
+                        elif event.key == K_ESCAPE:
+                            terminate()
+                pygame.display.update()
+                clock.tick(60)
+            while not isPlayerTurn:
                 pass
-            while !isPlayerTurn:
             pass
     
 #Scuffed
