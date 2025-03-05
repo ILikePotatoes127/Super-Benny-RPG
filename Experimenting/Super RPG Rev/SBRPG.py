@@ -278,7 +278,15 @@ class battleScene():
                 pygame.display.update()
                 clock.tick(20)
                 pass
+            battleScene.enemyDamaged()
         elif toplay == "SKILL":
+            match playerClass:
+                case "MAGE":
+                    pass
+                case "WARRIOR":
+                    pass
+                case "DARKLORD":
+                    pass
             pass
         
 
@@ -286,6 +294,22 @@ class battleScene():
         global enemySprite
         enemySprite = pygame.transform.scale(enemySprite,(128,128))
         screen.blit(enemySprite,(325,150))
+        
+    def enemyDamaged():
+        global enemySprite
+        enemySprite = pygame.transform.scale(enemySprite,(128,128))
+        fakeFrame = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG attackEnd.png").convert_alpha()
+        for i in range(10):
+            battleScene.battleBG()
+            if i // 2 == 1:
+                screen.blit(enemySprite,(325,150))
+            elif i //2 == 0:
+                screen.blit(fakeFrame,(325,150))
+            pygame.display.update()
+            clock.tick(20)
+        screen.blit(enemySprite,(325,150))
+        pygame.display.update()
+        clock.tick(20)
 
     def playerAttack():
         #Sored as HP, MP, ATK, DEF, SPD as a reminder
