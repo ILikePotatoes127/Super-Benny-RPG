@@ -24,7 +24,8 @@ RIGHT = "right"
 #define them as well as items and just make them random
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout, gameOver
+    
     playerItem = "NONE"
     wallet = 0
     playerClass = "MAGE"
@@ -33,6 +34,7 @@ def main():
     pygame.init()
     font = pygame.font.Font("Fonts/BennyFont.ttf", 24)
     battleUIFont = pygame.font.Font("Fonts/BennyFont.ttf", 16)
+    gameOver= pygame.font.Font("Fonts/BennyFont.ttf", 64)
     screen = pygame.display.set_mode((WIDTH,HEIGHT))
     transitionScreen = pygame.display.set_mode((WIDTH,HEIGHT))
     clock = pygame.time.Clock()
@@ -42,7 +44,7 @@ def main():
     chooseYourBenny()
     while True:
         battleScene.battleLogic()
-        terminate()
+
         
 def checkKey():
     if len(pygame.event.get(QUIT)) > 0:
@@ -338,6 +340,26 @@ class battleScene():
             return True
     
     def playerItem():
+        global playerItem
+        global playerStats
+        textDraw = ""
+        if playerItem == "NONE":
+            Textbox = "Yo aint got no items bruh"
+        pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
+        pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
+        for i in range(len(Textbox)):
+            textDraw += Textbox[i]
+            uiUpdate = battleUIFont.render(textDraw, True, WHITE)
+            screen.blit(uiUpdate, (30,390))
+            pygame.display.update()
+            clock.tick(60)
+        while True:
+             for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    return
+
         pass
     
     def battlePayOut():
@@ -358,8 +380,10 @@ class battleScene():
             battleScene.playerSkill()
             return True
         if playerAct == "ITEM" and playerItem != "NONE":
+            battleScene.playerItem()
             return True
         if playerAct == "ITEM" and playerItem == "NONE":
+            battleScene.playerItem()
             return False
 
     def playerCursor(choice):
@@ -367,7 +391,78 @@ class battleScene():
         sizeOne = math.sin(time) * 5
         sizeOne = int(sizeOne)
         pygame.draw.polygon(screen,WHITE,[(60+sizeOne,390+choice*20),(60+sizeOne,410+choice*20),(70+sizeOne,400+choice*20)])
+
+    def deadScreen():
+        screenTransition()
+        screen.fill(BLACK)
+        for i in range(255):
+            gameOverText = gameOver.render("GAME OVER", True, (i,i,i))
+            screen.blit(gameOverText,(((800/2)-300), (500/2)-100))
+            pygame.display.update()
+            clock.tick(60)
+        retryChoice = 0
+        retryText = ["YES", "NO"]
         
+        while True:
+            screen.fill(BLACK)
+            gameOverText = gameOver.render("GAME OVER", True, WHITE)
+            screen.blit(gameOverText,(((800/2)-300), (500/2)-100))
+            gameOverText = battleUIFont.render("Will you try again", True, WHITE)
+            screen.blit(gameOverText,(((800/2)-150), (500/2)))
+            battleScene.deadScreenCursor(retryChoice)
+            for f, option in enumerate(retryText):
+                text = battleUIFont.render(option,True,WHITE)
+                screen.blit(text,((300+f*150),300))
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    if (event.key == K_LEFT):
+                        retryChoice = 0
+                    elif (event.key == K_RIGHT):
+                        retryChoice = 1
+                    elif (event.key == K_SPACE):
+                        battleScene.deadScreenChoice(retryChoice)
+                        return
+            pygame.display.update()
+            clock.tick(60)
+
+    def deadScreenChoice(choice):
+        global enemyStats
+        global playerStats
+        global playerClass
+        classs = playerClass
+        if choice == 0:
+            screenTransition()
+            setPlayerStats(classs)
+            setEnemyStats()
+        elif choice == 1:
+            screenTransition()
+            terminate()
+
+    def deadScreenCursor(point):
+        time = pygame.time.get_ticks()/1000
+        sizeOne = math.sin(time) * 5
+        sizeOne = int(sizeOne)
+        pygame.draw.polygon(screen,WHITE,[(280+sizeOne+point*150,300),(280+sizeOne+point*150,320),(295+sizeOne+point*150,310)])
+            
+    def playerWin():
+        textDraw = ""
+        Textbox = "Y O U   W I N"
+        pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
+        pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
+        for i in range(len(Textbox)):
+            textDraw += Textbox[i]
+            uiUpdate = battleUIFont.render(textDraw, True, WHITE)
+            screen.blit(uiUpdate, (30,390))
+            pygame.display.update()
+            clock.tick(60)
+        while True:
+             for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    return
         
     def battleLogic():
         battleScene.battleBGIntro()
@@ -436,8 +531,57 @@ class battleScene():
                 if isEnemyDead:
                     battleScene.battlePayOut()
                 break
-            pass
+        if isEnemyDead:
+            battleScene.playerWin()
+            screenTransition()
+            battleScene.shopLogic()
+        if isPlayerDead:
+            battleScene.deadScreen()
 
+    def shopIntro():
+        for i in range(30):
+            screen.fill(BLACK)
+            shopTitle = "Benny Emporium of Goods"
+            shopRender = font.render(shopTitle, True, WHITE)
+            screen.blit(shopRender,(-370+i*15,40))
+            pygame.display.update()
+            clock.tick(60)
+    
+    def shopLogic():
+        screen.fill(BLACK)
+        battleScene.shopIntro()
+        global wallet
+        global playerItem
+        screen.fill(BLACK)
+        shopTitle = "Benny Emporium of Goods"
+        shopRender = font.render(shopTitle, True, WHITE)
+        screen.blit(shopRender,(-370+30*15,40))
+        pygame.display.update()
+        clock.tick(60)
+        shopChoice = 0
+        while True:
+            screen.fill(BLACK)
+            shopTitle = "Benny Emporium of Goods"
+            shopRender = font.render(shopTitle, True, WHITE)
+            screen.blit(shopRender,(-370+30*15,40))
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                elif event.type == KEYDOWN:
+                    if (event.key == K_RIGHT) and shopChoice < 2:
+                        shopChoice +=1
+                    elif (event.key == K_LEFT) and shopChoice > 0:
+                        shopChoice -=1
+                    elif (event.key == K_SPACE):
+                        print(shopChoice)
+                        #buy
+            pygame.display.update()
+            clock.tick(60)
+
+    def buyItem():
+        pass
+        
+        
 #Scuffed
 def screenTransition():
     currSize = 25
