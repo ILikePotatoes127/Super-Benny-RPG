@@ -567,7 +567,7 @@ class battleScene():
         sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
         bennyInventory = [sprRedPotion, sprGreenPotion, sprBluePotion]
         bennyPrices = [20,15,10]
-        bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion"]
+        bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion", "Exit"]
         screen.fill(BLACK)
         fade = pygame.Surface((WIDTH,HEIGHT))
         fade.fill((0,0,0))
@@ -580,13 +580,13 @@ class battleScene():
             inWalletRender = battleUIFont.render(inWallet, True, WHITE)
             screen.blit(inWalletRender,(25,5))
             for i, stock in enumerate(bennyInventory):
-                screen.blit(stock, (150+i*225,400))
+                screen.blit(stock, (150+i*200,400))
             for j, stock in enumerate(bennyPrices):
                 priceText = battleUIFont.render(str(stock),True,WHITE)
-                screen.blit(priceText,(150+j*225,440))
+                screen.blit(priceText,(150+j*200,440))
             for k, stock in enumerate(bennyItemNames):
                 itemName = battleUIFont.render(str(stock),True,WHITE)
-                screen.blit(itemName,(100+k*225,370))
+                screen.blit(itemName,(75+k*200,370))
             screen.blit(fade,(0,0))
             pygame.display.update()
             clock.tick(60)
@@ -607,7 +607,7 @@ class battleScene():
         shopChoice = 0
         bennyInventory = [sprRedPotion, sprGreenPotion, sprBluePotion]
         bennyPrices = [20,15,10]
-        bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion"]
+        bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion", "Exit"]
         #gameOverText = battleUIFont.render("Will you try again", True, WHITE)
          #   screen.blit(gameOverText,(((800/2)-150), (500/2)))
         while True:
@@ -617,18 +617,18 @@ class battleScene():
             inWalletRender = battleUIFont.render(inWallet, True, WHITE)
             screen.blit(inWalletRender,(25,5))
             for i, stock in enumerate(bennyInventory):
-                screen.blit(stock, (150+i*225,400))
+                screen.blit(stock, (150+i*200,400))
             for j, stock in enumerate(bennyPrices):
                 priceText = battleUIFont.render(str(stock),True,WHITE)
-                screen.blit(priceText,(150+j*225,440))
+                screen.blit(priceText,(150+j*200,440))
             for k, stock in enumerate(bennyItemNames):
                 itemName = battleUIFont.render(str(stock),True,WHITE)
-                screen.blit(itemName,(100+k*225,370))
+                screen.blit(itemName,(75+k*200,370))
             for event in pygame.event.get():
                 if event.type == QUIT:
                     terminate()
                 elif event.type == KEYDOWN:
-                    if (event.key == K_RIGHT) and shopChoice < 2:
+                    if (event.key == K_RIGHT) and shopChoice < 3:
                         shopChoice +=1
                     elif (event.key == K_LEFT) and shopChoice > 0:
                         shopChoice -=1
@@ -646,7 +646,7 @@ class battleScene():
         time = pygame.time.get_ticks()/1000
         sizeOne = math.sin(time) * 5
         sizeOne = int(sizeOne)
-        pygame.draw.polygon(screen,WHITE,[(130+sizeOne+point*225,410),(130+sizeOne+point*225,440),(140+sizeOne+point*225,425)])
+        pygame.draw.polygon(screen,WHITE,[(130+sizeOne+point*195,410),(130+sizeOne+point*195,440),(140+sizeOne+point*195,425)])
 
         pass
     def buyItem(choice):
@@ -665,6 +665,8 @@ class battleScene():
                 if wallet >= 10:
                     playerItem = "BLUE POTION"
                     return wallet - 10
+            case 3:
+                return wallet
         
         
 #Scuffed
