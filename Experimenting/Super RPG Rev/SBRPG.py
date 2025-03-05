@@ -22,6 +22,9 @@ RIGHT = "right"
 
 #Get any enemy stats here, I guess we'll see though, or we'll just manually
 #define them as well as items and just make them random
+
+
+#I am going to cry
 def main():
     #Any globals here I guess
     global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout, gameOver
