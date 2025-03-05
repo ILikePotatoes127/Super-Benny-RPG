@@ -28,8 +28,8 @@ RIGHT = "right"
 
 def main():
     #Any globals here I guess
-    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout, gameOver
-    
+    global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout, gameOver, enemyDeath, playerAnim
+    enemyDeath = []
     playerItem = "NONE"
     wallet = 0
     playerClass = "MAGE"
@@ -181,13 +181,34 @@ def setPlayerStats(playerSelect):
     playerClass = playerSelect
 
 def setEnemyStats():
-    global enemeySprite
+    global enemySprite
     global enemyName
     global enemyStats
     global enemyPayout
-    enemyName = "TEMP BENNY"
-    enemyStats = [20,10,500,5,1]
-    enemyPayout = 20
+    global enemyDeath
+    bennyChosen = random.randint(1,1)
+    enemyDeath = []
+    #sprBennyShop = pygame.image.load("Art Files/BennyRPG ShopWindow.png")
+    #Sored as HP, MP, ATK, DEF, SPD
+    match bennyChosen:
+        case 1:
+            enemySprite = pygame.image.load("Art Files/BennyRPG Blue Benny.png").convert_alpha()
+            enemyName = "BLUE BENNY"
+            deathAnim1 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation1.png").convert_alpha()
+            deathAnim2 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation2.png").convert_alpha()
+            deathAnim3 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation3.png").convert_alpha()
+            deathAnim4 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation4.png").convert_alpha()
+            deathAnim5 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation5.png").convert_alpha()
+            deathAnim6 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation6.png").convert_alpha()
+            deathAnim7 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation7.png").convert_alpha()
+            deathAnim8 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation8.png").convert_alpha()
+            enemyStats = [35,5,10,6,5]
+            enemyPayout = 15
+            pass
+        case 2:
+            pass
+        case 3:
+            pass
 
 class battleScene():
     def battleUI(pStat,eStat):
@@ -204,23 +225,65 @@ class battleScene():
         #clock.tick(60)
         
     def battleBGIntro():
+        battleBg = pygame.image.load("Art Files/BennyRPG Fighting Grounds.png")
         targetHeight = 270
         targetWidth = 780
         newHeight = 60
         newWidth = 10
+        
         while newHeight != targetHeight:
+            screen.blit(battleBg,(30,60))
             newHeight += 10
-            pygame.draw.rect(screen, BATTLEBG, [(10,60),(newWidth,newHeight)])
+            pygame.draw.rect(screen, BLACK, [(newWidth,newHeight),(780,270)])
             pygame.display.update()
             clock.tick(60)
         while newWidth != targetWidth:
+            screen.blit(battleBg,(30,60))
             newWidth += 10
-            pygame.draw.rect(screen, BATTLEBG, [(10,60),(newWidth,newHeight)])
+            pygame.draw.rect(screen, BLACK, [(newWidth,newHeight),(780,270)])
             pygame.display.update()
             clock.tick(60)
             
     def battleBG():
-        pygame.draw.rect(screen, BATTLEBG, [(10,60),(780,270)])
+        
+        battleBg = pygame.image.load("Art Files/BennyRPG Fighting Grounds.png")
+        screen.blit(battleBg,(30,60))
+        
+    def playerAnimation(toplay):
+        global playerAnim
+        global playerClass
+        if toplay == "ATTACK":
+            slash1 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk1.png").convert_alpha()
+            slash1 = pygame.transform.scale(slash1,(128,128))
+            slash2 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk2.png").convert_alpha()
+            slash2 = pygame.transform.scale(slash2,(128,128))
+            slash3 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk3.png").convert_alpha()
+            slash3 = pygame.transform.scale(slash3,(128,128))
+            slash4 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk4.png").convert_alpha()
+            slash4 = pygame.transform.scale(slash4,(128,128))
+            slash5 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk5.png").convert_alpha()
+            slash5 = pygame.transform.scale(slash5,(128,128))
+            slash6 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk6.png").convert_alpha()
+            slash6 = pygame.transform.scale(slash6,(128,128))
+            slash7 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk7.png").convert_alpha()
+            slash7 = pygame.transform.scale(slash7,(128,128))
+            playerAnim = [slash1, slash2, slash3, slash4, slash5, slash6, slash7]
+            
+            for i, anim in enumerate(playerAnim):
+                battleScene.battleBG()
+                battleScene.drawEnemy()
+                screen.blit(anim,(325,150))
+                pygame.display.update()
+                clock.tick(20)
+                pass
+        elif toplay == "SKILL":
+            pass
+        
+
+    def drawEnemy():
+        global enemySprite
+        enemySprite = pygame.transform.scale(enemySprite,(128,128))
+        screen.blit(enemySprite,(325,150))
 
     def playerAttack():
         #Sored as HP, MP, ATK, DEF, SPD as a reminder
@@ -394,9 +457,11 @@ class battleScene():
         global playerStats
         global playerItem
         if playerAct == "ATTACK":
+            battleScene.playerAnimation("ATTACK")
             battleScene.playerAttack()
             return True
         if playerAct == "SKILL" and playerStats[1]>=5:
+            battleScene.playerAnimation("SKILL")
             battleScene.playerSkill()
             return True
         if playerAct == "ITEM" and playerItem != "NONE":
@@ -509,6 +574,7 @@ class battleScene():
             while isPlayerTurn and not isEnemyDead and not isPlayerDead:
                 screen.fill(BLACK)
                 battleScene.battleBG()
+                battleScene.drawEnemy()
                 battleScene.battleUI(playerStats,enemyStats)
                 for f in range(3):
                     playerChoiceText = battleUIFont.render(playerCommandOptions[f], True, WHITE)
