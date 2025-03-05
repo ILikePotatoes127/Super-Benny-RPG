@@ -25,6 +25,7 @@ RIGHT = "right"
 
 
 #I am going to cry
+
 def main():
     #Any globals here I guess
     global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout, gameOver
@@ -43,6 +44,7 @@ def main():
     clock = pygame.time.Clock()
     pygame.display.set_caption("Super Benny RPG!")
     delta = clock.tick(FPS)/100
+    #Sprites
     introGame()
     chooseYourBenny()
     while True:
@@ -542,31 +544,70 @@ class battleScene():
             battleScene.deadScreen()
 
     def shopIntro():
-        for i in range(30):
-            screen.fill(BLACK)
-            shopTitle = "Benny Emporium of Goods"
-            shopRender = font.render(shopTitle, True, WHITE)
-            screen.blit(shopRender,(-370+i*15,40))
+        sprBennyShop = pygame.image.load("Art Files/BennyRPG ShopWindow.png")
+        sprBennyCoin = pygame.image.load("Art Files/BennyRPG Benny Coin.png").convert_alpha()
+        sprBluePotion = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+        sprRedPotion = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
+        sprGreenPotion = pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
+        sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+        bennyInventory = [sprRedPotion, sprGreenPotion, sprBluePotion]
+        bennyPrices = [20,15,10]
+        bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion"]
+        screen.fill(BLACK)
+        fade = pygame.Surface((WIDTH,HEIGHT))
+        fade.fill((0,0,0))
+        for i in range(150):
+            screen.blit(sprBennyShop,(0,0))
+            fade.set_alpha(300-i*2)
+            screen.blit(sprBennyShop,(0,0))
+            screen.blit(sprBennyCoin,(5,5))
+            inWallet = str(wallet)
+            inWalletRender = battleUIFont.render(inWallet, True, WHITE)
+            screen.blit(inWalletRender,(25,5))
+            for i, stock in enumerate(bennyInventory):
+                screen.blit(stock, (150+i*225,400))
+            for j, stock in enumerate(bennyPrices):
+                priceText = battleUIFont.render(str(stock),True,WHITE)
+                screen.blit(priceText,(150+j*225,440))
+            for k, stock in enumerate(bennyItemNames):
+                itemName = battleUIFont.render(str(stock),True,WHITE)
+                screen.blit(itemName,(100+k*225,370))
+            screen.blit(fade,(0,0))
             pygame.display.update()
             clock.tick(60)
-    
+            
     def shopLogic():
-        screen.fill(BLACK)
+        sprBennyCoin = pygame.image.load("Art Files/BennyRPG Benny Coin.png").convert_alpha()
+        sprBennyShop = pygame.image.load("Art Files/BennyRPG ShopWindow.png")
+        sprBluePotion = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+        sprRedPotion = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
+        sprGreenPotion = pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
+        sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
         battleScene.shopIntro()
         global wallet
         global playerItem
-        screen.fill(BLACK)
-        shopTitle = "Benny Emporium of Goods"
-        shopRender = font.render(shopTitle, True, WHITE)
-        screen.blit(shopRender,(-370+30*15,40))
         pygame.display.update()
         clock.tick(60)
         shopChoice = 0
+        bennyInventory = [sprRedPotion, sprGreenPotion, sprBluePotion]
+        bennyPrices = [20,15,10]
+        bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion"]
+        #gameOverText = battleUIFont.render("Will you try again", True, WHITE)
+         #   screen.blit(gameOverText,(((800/2)-150), (500/2)))
         while True:
-            screen.fill(BLACK)
-            shopTitle = "Benny Emporium of Goods"
-            shopRender = font.render(shopTitle, True, WHITE)
-            screen.blit(shopRender,(-370+30*15,40))
+            screen.blit(sprBennyShop,(0,0))
+            screen.blit(sprBennyCoin,(5,5))
+            inWallet = str(wallet)
+            inWalletRender = battleUIFont.render(inWallet, True, WHITE)
+            screen.blit(inWalletRender,(25,5))
+            for i, stock in enumerate(bennyInventory):
+                screen.blit(stock, (150+i*225,400))
+            for j, stock in enumerate(bennyPrices):
+                priceText = battleUIFont.render(str(stock),True,WHITE)
+                screen.blit(priceText,(150+j*225,440))
+            for k, stock in enumerate(bennyItemNames):
+                itemName = battleUIFont.render(str(stock),True,WHITE)
+                screen.blit(itemName,(100+k*225,370))
             for event in pygame.event.get():
                 if event.type == QUIT:
                     terminate()
@@ -580,8 +621,14 @@ class battleScene():
                         #buy
             pygame.display.update()
             clock.tick(60)
+            screen.fill(BLACK)
 
+    def shopCursor(point):
+        pass
     def buyItem():
+        global wallet
+        global playerItem
+        
         pass
         
         
