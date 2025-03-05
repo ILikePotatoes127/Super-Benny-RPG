@@ -345,11 +345,25 @@ class battleScene():
             return True
     
     def playerItem():
+        #Sored as HP, MP, ATK, DEF, SPD as a reminder
         global playerItem
         global playerStats
         textDraw = ""
-        if playerItem == "NONE":
-            Textbox = "Yo aint got no items bruh"
+        match playerItem:
+            case "NONE":
+                Textbox = "Yo aint got no items bruh"
+            case "RED POTION":
+                Textbox = "Drank a cherry potion"
+                playerStats[0] += 10
+                playerStats[2] += 2
+            case "BLUE POTION":
+                Textbox = "Drank a blueberry potion"
+                playerStats[1] += 20
+                playerStats[3] += 2
+            case "GREEN POTION":
+                Textbox = "Drank a green apple potion"
+                for i in range(len(playerStats)):
+                    playerStats[i] += 1
         pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
         pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
         for i in range(len(Textbox)):
@@ -358,6 +372,7 @@ class battleScene():
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
             clock.tick(60)
+            
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -586,6 +601,7 @@ class battleScene():
         battleScene.shopIntro()
         global wallet
         global playerItem
+        global enemyStats
         pygame.display.update()
         clock.tick(60)
         shopChoice = 0
@@ -617,19 +633,38 @@ class battleScene():
                     elif (event.key == K_LEFT) and shopChoice > 0:
                         shopChoice -=1
                     elif (event.key == K_SPACE):
-                        print(shopChoice)
-                        #buy
+                        inWallet = battleScene.buyItem(shopChoice)
+                        setEnemyStats()
+                        screenTransition()
+                        return
+            battleScene.shopCursor(shopChoice)
             pygame.display.update()
             clock.tick(60)
             screen.fill(BLACK)
 
     def shopCursor(point):
+        time = pygame.time.get_ticks()/1000
+        sizeOne = math.sin(time) * 5
+        sizeOne = int(sizeOne)
+        pygame.draw.polygon(screen,WHITE,[(130+sizeOne+point*225,410),(130+sizeOne+point*225,440),(140+sizeOne+point*225,425)])
+
         pass
-    def buyItem():
+    def buyItem(choice):
         global wallet
         global playerItem
-        
-        pass
+        match choice:
+            case 0:
+                if wallet >= 20:
+                    playerItem = "RED POTION"
+                    return wallet - 20
+            case 1:
+                if wallet >= 15:
+                    playerItem = "GREEN POTION"
+                    return wallet - 15
+            case 2:
+                if wallet >= 10:
+                    playerItem = "BLUE POTION"
+                    return wallet - 10
         
         
 #Scuffed
