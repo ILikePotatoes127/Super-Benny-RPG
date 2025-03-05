@@ -202,7 +202,9 @@ def setEnemyStats():
             deathAnim6 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation6.png").convert_alpha()
             deathAnim7 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation7.png").convert_alpha()
             deathAnim8 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation8.png").convert_alpha()
+            deathAnim9 = pygame.image.load("Art Files/Animations/Blue Benny Death (100ms)/BennyRPG Blue Benny Death Animation9.png").convert_alpha()
             enemyStats = [35,5,10,6,5]
+            enemyDeath = [deathAnim1, deathAnim2, deathAnim3, deathAnim4, deathAnim5, deathAnim6, deathAnim7, deathAnim8, deathAnim9]
             enemyPayout = 15
             pass
         case 2:
@@ -267,8 +269,8 @@ class battleScene():
             slash6 = pygame.transform.scale(slash6,(128,128))
             slash7 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk7.png").convert_alpha()
             slash7 = pygame.transform.scale(slash7,(128,128))
-            playerAnim = [slash1, slash2, slash3, slash4, slash5, slash6, slash7]
-            
+            slash8 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG attackEnd.png").convert_alpha()
+            playerAnim = [slash1, slash2, slash3, slash4, slash5, slash6, slash7, slash8]
             for i, anim in enumerate(playerAnim):
                 battleScene.battleBG()
                 battleScene.drawEnemy()
@@ -399,8 +401,18 @@ class battleScene():
         global enemyStats
         if enemyStats[0] <= 0:
             enemyStats[0] = 0
+            battleScene.enemyDeath()
             return True
-    
+        
+    def enemyDeath():
+        global enemyDeath
+        for i, anim in enumerate(enemyDeath):
+            anim = pygame.transform.scale(anim,(128,128))
+            battleScene.battleBG()
+            screen.blit(anim,(325,150))
+            pygame.display.update()
+            clock.tick(20)
+        
     def checkPlayerDead():
         global playerStats
         if playerStats[0] <= 0:
