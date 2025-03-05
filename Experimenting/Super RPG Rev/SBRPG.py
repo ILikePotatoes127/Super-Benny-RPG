@@ -254,6 +254,7 @@ class battleScene():
     def playerAnimation(toplay):
         global playerAnim
         global playerClass
+        playerAnim = []
         if toplay == "ATTACK":
             slash1 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG Basic Atk1.png").convert_alpha()
             slash1 = pygame.transform.scale(slash1,(128,128))
@@ -276,17 +277,47 @@ class battleScene():
                 battleScene.drawEnemy()
                 screen.blit(anim,(325,150))
                 pygame.display.update()
-                clock.tick(20)
-                pass
+                clock.tick(30)
             battleScene.enemyDamaged()
         elif toplay == "SKILL":
             match playerClass:
                 case "MAGE":
-                    pass
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack1.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack2.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack3.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack4.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack5.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack6.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack7.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack8.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack9.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack10.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack11.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack12.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack13.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack14.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack15.png").convert_alpha())
+                    
                 case "WARRIOR":
-                    pass
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Cross Slash (100ms)/BennyRPG Cross Slash1.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Cross Slash (100ms)/BennyRPG Cross Slash2.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Cross Slash (100ms)/BennyRPG Cross Slash3.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Cross Slash (100ms)/BennyRPG Cross Slash4.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Cross Slash (100ms)/BennyRPG Cross Slash5.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack15.png").convert_alpha())
+                    
                 case "DARKLORD":
                     pass
+                case "THIEF":
+                    pass
+            for i, anim in enumerate(playerAnim):
+                battleScene.battleBG()
+                anim = pygame.transform.scale(anim,(128,128))
+                battleScene.drawEnemy()
+                screen.blit(anim,(325,150))
+                pygame.display.update()
+                clock.tick(15)
+            battleScene.enemyDamaged()
             pass
         
 
