@@ -66,7 +66,40 @@ def terminate():
     pygame.quit()
     sys.exit()
 
+def sound(sfx):
+    match sfx:
+        case 0:
+            ui_select = pygame.mixer.Sound("Sounds/ui_select.wav")
+            pygame.mixer.Sound.play(ui_select)
+        case 1:
+            ui_move = pygame.mixer.Sound("Sounds/ui_move.wav")
+            pygame.mixer.Sound.play(ui_move)
+        case 2:
+            ice_spell = pygame.mixer.Sound("Sounds/ice_spell.wav")
+            pygame.mixer.Sound.play(ice_spell)
+        case 3:
+            ice_break = pygame.mixer.Sound("Sounds/ice_break.wav")
+            pygame.mixer.Sound.play(ice_break)
+        case 4:
+            throw_dagger = pygame.mixer.Sound("Sounds/throw_dagger.wav")
+            pygame.mixer.Sound.play(throw_dagger)
+        case 5:
+            sword_skill = pygame.mixer.Sound("Sounds/sword_skill.wav")
+            pygame.mixer.Sound.play(sword_skill)
+        case 6:
+            shadow_ball = pygame.mixer.Sound("Sounds/shadow_ball.wav")
+            pygame.mixer.Sound.play(shadow_ball)
+        case 7:
+            hurt = pygame.mixer.Sound("Sounds/enemy_hurt.wav")
+            pygame.mixer.Sound.play(hurt)
+        case 8:
+            die = pygame.mixer.Sound("Sounds/enemy_die.wav")
+            pygame.mixer.Sound.play(die)
+            
+            
 
+
+            
 def introGame():
     while True:
         time = pygame.time.get_ticks()/1000
@@ -93,11 +126,13 @@ def introGame():
         
         if checkKey():
             pygame.event.get()
+            sound(0)
             screenTransition()
             return
     
         pygame.display.update()
         clock.tick(FPS)
+        
 
 def rosterScreen(point):
     if point == "MAGE":
@@ -152,22 +187,31 @@ def chooseYourBenny():
                 terminate()
             elif event.type == KEYDOWN:
                 if (event.key == K_RIGHT) and currentChoice == "MAGE":
+                    sound(1)
                     currentChoice = "WARRIOR"
                 elif (event.key == K_RIGHT) and currentChoice == "WARRIOR":
+                    sound(1)
                     currentChoice = "THIEF"
                 elif (event.key == K_RIGHT) and currentChoice == "THIEF":
+                    sound(1)
                     currentChoice = "DARKLORD"
                 elif (event.key == K_RIGHT) and currentChoice == "DARKLORD":
+                    sound(1)
                     currentChoice = "MAGE"
                 elif (event.key == K_LEFT) and currentChoice == "MAGE":
+                    sound(1)
                     currentChoice = "DARKLORD"
                 elif (event.key == K_LEFT) and currentChoice == "WARRIOR":
+                    sound(1)
                     currentChoice = "MAGE"
                 elif (event.key == K_LEFT) and currentChoice == "THIEF":
+                    sound(1)
                     currentChoice = "WARRIOR"
                 elif (event.key == K_LEFT) and currentChoice == "DARKLORD":
+                    sound(1)
                     currentChoice = "THIEF"
                 elif (event.key == K_SPACE):
+                    sound(0)
                     setPlayerStats(currentChoice)
                     setEnemyStats()
                     screenTransition()
@@ -384,6 +428,7 @@ class battleScene():
             slash7 = pygame.transform.scale(slash7,(128,128))
             slash8 = pygame.image.load("Art Files/Animations/Basic Attack (100ms)/BennyRPG attackEnd.png").convert_alpha()
             playerAnim = [slash1, slash2, slash3, slash4, slash5, slash6, slash7, slash8]
+            sound(7)
             for i, anim in enumerate(playerAnim):
                 battleScene.battleBG()
                 battleScene.drawEnemy()
@@ -459,6 +504,7 @@ class battleScene():
                     playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger8.png").convert_alpha())
                     playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack15.png").convert_alpha())
             if playerClass == "DARKLORD":
+                sound(6)
                 for i, anim in enumerate(playerAnim):
                     #7
                     battleScene.battleBG()
@@ -472,6 +518,7 @@ class battleScene():
                     screen.blit(threeShadow,(325,80+i*10))
                     pygame.display.update()
                     clock.tick(40)
+                sound(3)
                 for j, anim in enumerate(shadowballExplosion):
                     battleScene.battleBG()
                     anim = pygame.transform.scale(anim,(128,128))
@@ -479,7 +526,10 @@ class battleScene():
                     screen.blit(anim,(325,150))
                     pygame.display.update()
                     clock.tick(30)
+                sound(3)
+                    
             elif playerClass == "THIEF":
+                sound(4)
                 for j, anim in enumerate(playerAnim):
                     battleScene.battleBG()
                     anim = pygame.transform.scale(anim,(128,128))
@@ -487,7 +537,21 @@ class battleScene():
                     screen.blit(anim,(325,60+j*10))
                     pygame.display.update()
                     clock.tick(30)
+                    if j == len(playerAnim)-1:
+                        sound(3)
+            elif playerClass =="MAGE":
+                sound(2)
+                for i, anim in enumerate(playerAnim):
+                    battleScene.battleBG()
+                    anim = pygame.transform.scale(anim,(128,128))
+                    battleScene.drawEnemy()
+                    screen.blit(anim,(325,150))
+                    pygame.display.update()
+                    if i == 8:
+                        sound(3)
+                    clock.tick(15)
             else:
+                sound(5)
                 for i, anim in enumerate(playerAnim):
                     battleScene.battleBG()
                     anim = pygame.transform.scale(anim,(128,128))
@@ -495,6 +559,8 @@ class battleScene():
                     screen.blit(anim,(325,150))
                     pygame.display.update()
                     clock.tick(15)
+                    if i == len(playerAnim)-1:
+                        sound(3)
             battleScene.enemyDamaged()
 
         
@@ -603,6 +669,7 @@ class battleScene():
                     return
     
     def enemyAttack():
+        sound(7)
         #Sored as HP, MP, ATK, DEF, SPD as a reminder
         global enemyStats
         global playerStats
@@ -640,6 +707,7 @@ class battleScene():
         
     def enemyDeath():
         global enemyDeath
+        sound(8)
         for i, anim in enumerate(enemyDeath):
             anim = pygame.transform.scale(anim,(128,128))
             battleScene.battleBG()
@@ -650,6 +718,7 @@ class battleScene():
     def checkPlayerDead():
         global playerStats
         if playerStats[0] <= 0:
+            sound(8)
             playerStats[0] = 0
             return True
     
