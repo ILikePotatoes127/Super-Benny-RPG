@@ -29,6 +29,9 @@ RIGHT = "right"
 def main():
     #Any globals here I guess
     global clock, screen, font, delta, transitionScreen, playerStats, wallet, battleUIFont, enemyStats, enemySprite, enemyName, playerItem, playerClass, battleCount, enemyPayout, gameOver, enemyDeath, playerAnim
+    global igInput, inShop
+    igInput = True
+    inShop = True
     enemyDeath = []
     playerItem = "NONE"
     wallet = 0
@@ -95,12 +98,32 @@ def sound(sfx):
         case 8:
             die = pygame.mixer.Sound("Sounds/enemy_die.wav")
             pygame.mixer.Sound.play(die)
+        case 9:
+            shop_select = pygame.mixer.Sound("Sounds/shop_select.wav")
+            pygame.mixer.Sound.play(shop_select)
+        case 10:
+            shop_broke = pygame.mixer.Sound("Sounds/shop_broke.wav")
+            pygame.mixer.Sound.play(shop_broke)
+        case 11:
+            shop_item = pygame.mixer.Sound("Sounds/bought-item.mp3")
+            pygame.mixer.Sound.play(shop_item)
+        case 12:
+            enemy_ready =pygame.mixer.Sound("Sounds/enemy_ready.wav")
+            pygame.mixer.Sound.play(enemy_ready)
+        case 13:
+            drink = pygame.mixer.Sound("Sounds/drinker.wav")
+            pygame.mixer.Sound.play(drink)
+        case 14:
+            bennywin = pygame.mixer.Sound("Sounds/bennywin.wav")
+            pygame.mixer.Sound.play(bennywin)
             
             
 
 
             
 def introGame():
+    ignoreInput = True
+    titleScreen = pygame.image.load("Art Files/title screen.png").convert_alpha()
     while True:
         time = pygame.time.get_ticks()/1000
         sizeOne = math.sin(time) * 50 + 200
@@ -114,22 +137,25 @@ def introGame():
         pygame.draw.circle(screen, BLUE, (810,10), 100 + sizeOne, sizeTwo)
         pygame.draw.circle(screen, BLUE_SKY, (10,410), 100 + sizeOne, sizeTwo)
         pygame.draw.circle(screen, GREEN, (810,410), 100 + sizeOne, sizeTwo)
-        titleFont = pygame.font.Font("Fonts/BennyFont.ttf", 24)
-        titleScreen = "Super Benny RPG"
-        space = 30
-        for i in range(len(titleScreen)):
-            titleOneText = titleFont.render(titleScreen[i], True, GREEN)
-            screen.blit(titleOneText,(200+i*space,105+1*sizeThree))
-        for i in range(len(titleScreen)):
-            titleOneText = titleFont.render(titleScreen[i], True, WHITE)
-            screen.blit(titleOneText,(200+i*space,100+1*sizeThree))
+        #titleFont = pygame.font.Font("Fonts/BennyFont.ttf", 24)
+        #titleScreen = "Super Benny RPG"
+        screen.blit(titleScreen,(100,50+sizeThree))
+        #space = 30
+        #for i in range(len(titleScreen)):
+        #    titleOneText = titleFont.render(titleScreen[i], True, GREEN)
+        #    screen.blit(titleOneText,(200+i*space,105+1*sizeThree))
+        #for i in range(len(titleScreen)):
+        #    titleOneText = titleFont.render(titleScreen[i], True, WHITE)
+        #    screen.blit(titleOneText,(200+i*space,100+1*sizeThree))
         
         if checkKey():
             pygame.event.get()
             sound(0)
             screenTransition()
             return
-    
+        if ignoreInput == True:
+            pygame.event.clear()
+            ignoreInput = False
         pygame.display.update()
         clock.tick(FPS)
         
@@ -148,6 +174,7 @@ def rosterScreen(point):
     
     
 def chooseYourBenny():
+    ignoreInput = True
     headerFont = pygame.font.Font("Fonts/BennyFont.ttf", 24)
     textHeader = "Choose your Benny"
     addPos = 20
@@ -182,6 +209,9 @@ def chooseYourBenny():
         screen.blit(choiceText,(80+sizeOne,415))
         rosterScreen(currentChoice)
         #LOL
+        if ignoreInput == True:
+            pygame.event.clear()
+            ignoreInput = False
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
@@ -607,7 +637,8 @@ class battleScene():
             uiUpdate = battleUIFont.render(textDraw, True, WHITE)
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
-            clock.tick(60) 
+            clock.tick(60)
+        pygame.event.clear()
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -639,7 +670,8 @@ class battleScene():
             uiUpdate = battleUIFont.render(textDraw, True, WHITE)
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
-            clock.tick(60) 
+            clock.tick(60)
+        pygame.event.clear()
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -648,6 +680,7 @@ class battleScene():
                     return
 
     def enemyChatter():
+        sound(12)
         global enemyName
         Textbox = str(enemyName) + " lunges forward"
         pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
@@ -661,6 +694,7 @@ class battleScene():
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
             clock.tick(60)
+        pygame.event.clear()
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -691,7 +725,8 @@ class battleScene():
             uiUpdate = battleUIFont.render(textDraw, True, WHITE)
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
-            clock.tick(60) 
+            clock.tick(60)
+        pygame.event.clear()
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -730,16 +765,23 @@ class battleScene():
         match playerItem:
             case "NONE":
                 Textbox = "Yo aint got no items bruh"
+                playerItem = "NONE"
             case "RED POTION":
                 Textbox = "Drank a cherry potion"
                 playerStats[0] += 10
                 playerStats[2] += 2
+                playerItem = "NONE"
+                sound(13)
             case "BLUE POTION":
                 Textbox = "Drank a blueberry potion"
                 playerStats[1] += 20
                 playerStats[3] += 2
+                playerItem = "NONE"
+                sound(13)
             case "GREEN POTION":
                 Textbox = "Drank a green apple potion"
+                playerItem = "NONE"
+                sound(13)
                 for i in range(len(playerStats)):
                     playerStats[i] += 1
         pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
@@ -750,7 +792,7 @@ class battleScene():
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
             clock.tick(60)
-            
+        pygame.event.clear()
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
@@ -793,6 +835,8 @@ class battleScene():
         pygame.draw.polygon(screen,WHITE,[(60+sizeOne,390+choice*20),(60+sizeOne,410+choice*20),(70+sizeOne,400+choice*20)])
 
     def deadScreen():
+        global playerItem
+        playerItem = "NONE"
         screenTransition()
         screen.fill(BLACK)
         for i in range(255):
@@ -802,6 +846,7 @@ class battleScene():
             clock.tick(60)
         retryChoice = 0
         retryText = ["YES", "NO"]
+        pygame.event.clear()
         
         while True:
             screen.fill(BLACK)
@@ -847,6 +892,7 @@ class battleScene():
         pygame.draw.polygon(screen,WHITE,[(280+sizeOne+point*150,300),(280+sizeOne+point*150,320),(295+sizeOne+point*150,310)])
             
     def playerWin():
+        sound(14)
         textDraw = ""
         Textbox = "Y O U   W I N"
         pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
@@ -857,15 +903,61 @@ class battleScene():
             screen.blit(uiUpdate, (30,390))
             pygame.display.update()
             clock.tick(60)
+        pygame.event.clear()
         while True:
              for event in pygame.event.get():
                 if event.type == QUIT:
                     terminate()
                 elif event.type == KEYDOWN:
                     return
+    def showPlayerItem():
+        sprBluePotion = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+        sprRedPotion = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
+        sprGreenPotion = pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
+        sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+        sprite = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+        global playerItem
+        match playerItem:
+            case "NONE":
+                sprite = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+            case "BLUE POTION":
+                sprite = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+            case "RED POTION":
+                sprite = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
+            case "GREEN POTION":
+                sprite =pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
+        sprite = pygame.transform.scale(sprite,(64,64))
+        text = "Item"
+        itemText = battleUIFont.render(text, True, WHITE)
+        screen.blit(itemText,(600,370))
+        screen.blit(sprite,(610,400))
+
+    def showPlayerShopItem():
+        sprBluePotion = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+        sprRedPotion = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
+        sprGreenPotion = pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
+        sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+        sprite = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+        global playerItem
+        match playerItem:
+            case "NONE":
+                sprite = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+            case "BLUE POTION":
+                sprite = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
+            case "RED POTION":
+                sprite = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
+            case "GREEN POTION":
+                sprite =pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
+        sprite = pygame.transform.scale(sprite,(64,64))
+        text = "Current Item"
+        itemText = battleUIFont.render(text, True, WHITE)
+        screen.blit(itemText,(600,70))
+        screen.blit(sprite,(650,100))
         
+                
     def battleLogic():
         battleScene.battleBGIntro()
+        pygame.event.clear()
         global playerStats
         global enemyStats
         eSpeed = enemyStats[-1]
@@ -896,18 +988,23 @@ class battleScene():
                     screen.blit(playerChoiceText,(80,390+f*20))
                 commandPrompt = battleUIFont.render("Commands", True, WHITE)
                 screen.blit(commandPrompt,(60,370))
+                battleScene.showPlayerItem()
                 battleScene.playerCursor(playerChoice)
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         terminate()
                     elif event.type == KEYDOWN:
                         if (event.key == K_DOWN) and playerChoice < 2:
+                            sound(9)
                             playerChoice += 1
                         elif (event.key == K_UP) and playerChoice > 0:
+                            sound(9)
                             playerChoice -= 1
                         elif (event.key == K_SPACE):
+                            sound(9)
                             isPlayerChoiceValid = battleScene.playerAction(playerCommandOptions[playerChoice])
                         elif event.key == K_ESCAPE:
+                            sound(9)
                             terminate()
                 pygame.display.update()
                 clock.tick(60)
@@ -975,12 +1072,14 @@ class battleScene():
             for k, stock in enumerate(bennyItemNames):
                 itemName = battleUIFont.render(str(stock),True,WHITE)
                 screen.blit(itemName,(75+k*200,370))
+            battleScene.showPlayerShopItem()
             screen.blit(sprDoor, (675,400))
             screen.blit(fade,(0,0))
             pygame.display.update()
             clock.tick(60)
             
     def shopLogic():
+        pygame.event.clear()
         #BennyRPG_Door_Exit
         sprBennyCoin = pygame.image.load("Art Files/BennyRPG Benny Coin.png").convert_alpha()
         sprBennyShop = pygame.image.load("Art Files/BennyRPG ShopWindow.png")
@@ -994,6 +1093,8 @@ class battleScene():
         sprGreenPotion = pygame.transform.scale(sprGreenPotion,(48,48))
         sprDoor = pygame.transform.scale(sprDoor,(48,48))
         battleScene.shopIntro()
+        global inShop
+        inShop = True
         global wallet
         global playerItem
         global enemyStats
@@ -1005,7 +1106,9 @@ class battleScene():
         bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion", "Exit"]
         #gameOverText = battleUIFont.render("Will you try again", True, WHITE)
          #   screen.blit(gameOverText,(((800/2)-150), (500/2)))
-        while True:
+        pygame.event.clear()
+        while inShop:
+            screen.fill(BLACK)
             screen.blit(sprBennyShop,(0,0))
             screen.blit(sprBennyCoin,(5,5))
             inWallet = str(wallet)
@@ -1025,18 +1128,19 @@ class battleScene():
                     terminate()
                 elif event.type == KEYDOWN:
                     if (event.key == K_RIGHT) and shopChoice < 3:
+                        sound(9)
                         shopChoice +=1
                     elif (event.key == K_LEFT) and shopChoice > 0:
+                        sound(9)
                         shopChoice -=1
                     elif (event.key == K_SPACE):
                         inWallet = battleScene.buyItem(shopChoice)
-                        setEnemyStats()
-                        screenTransition()
-                        return
+            battleScene.showPlayerShopItem()
             battleScene.shopCursor(shopChoice)
             pygame.display.update()
             clock.tick(60)
-            screen.fill(BLACK)
+        setEnemyStats()
+        screenTransition()
 
     def shopCursor(point):
         time = pygame.time.get_ticks()/1000
@@ -1048,20 +1152,37 @@ class battleScene():
     def buyItem(choice):
         global wallet
         global playerItem
+        global inShop
         match choice:
             case 0:
                 if wallet >= 20:
                     playerItem = "RED POTION"
+                    inShop = False
+                    sound(11)
                     return wallet - 20
+                else:
+                    sound(10)
+                    return wallet
             case 1:
                 if wallet >= 15:
                     playerItem = "GREEN POTION"
+                    inShop = False
+                    sound(11)
                     return wallet - 15
+                else:
+                    sound(10)
+                    return wallet
             case 2:
                 if wallet >= 10:
+                    inShop = False
+                    sound(11)
                     playerItem = "BLUE POTION"
                     return wallet - 10
+                else:
+                    sound(10)
+                    return wallet
             case 3:
+                inShop = False
                 return wallet
         
         
