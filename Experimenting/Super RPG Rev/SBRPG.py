@@ -186,7 +186,7 @@ def setEnemyStats():
     global enemyStats
     global enemyPayout
     global enemyDeath
-    bennyChosen = random.randint(1,1)
+    bennyChosen = random.randint(1,8)
     enemyDeath = []
     #sprBennyShop = pygame.image.load("Art Files/BennyRPG ShopWindow.png")
     #Sored as HP, MP, ATK, DEF, SPD
@@ -206,22 +206,121 @@ def setEnemyStats():
             enemyStats = [35,5,10,6,5]
             enemyDeath = [deathAnim1, deathAnim2, deathAnim3, deathAnim4, deathAnim5, deathAnim6, deathAnim7, deathAnim8, deathAnim9]
             enemyPayout = 15
-            pass
         case 2:
-            pass
+            enemyName = "RED BENNY"
+            enemySprite = pygame.image.load("Art Files/BennyRPG Red Benny.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Red Benny Death (100ms)/BennyRPG Red Benny Death Animation9.png").convert_alpha())
+            enemyStats = [40,5,15,7,2]
+            enemyPayout = 15
         case 3:
-            pass
+            enemyName = "GREEN BENNY"
+            enemySprite = pygame.image.load("Art Files/BennyRPG Grean Beany.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Green Benny Death (100ms)/BennyRPG Green Beany Death Animation9.png").convert_alpha())
+            enemyStats = [35,5,5,8,50]
+            enemyPayout = 15
+        case 4:
+            enemyName = "PAPER BENNY"
+            enemySprite = pygame.image.load("Art Files/BennyRPG Paper Benny.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Paper Benny Death (100ms)/BennyRPG Paper Benny Death Animation9.png").convert_alpha())
+            enemyStats = [35,5,10,6,5]
+            enemyPayout = 15
+        case 5:
+            enemyName = "GOLD BENNY"
+            enemySprite = pygame.image.load("Art Files/BennyRPG Gold Benny.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Gold Benny Death (100ms)/BennyRPG Gold Benny Death Animation9.png").convert_alpha())
+            enemyStats = [100,5,10,6,5]
+            enemyPayout = 15
+        case 6:
+            enemyName = "TURBO BENNY"
+            enemySprite = pygame.image.load("Art Files/BennyRPG Turbo Benny.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Turbo Benny Death (100ms)/BennyRPG Turbo Benny Death Animation9.png").convert_alpha())
+            enemyStats = [25,5,10,6,1000]
+            enemyPayout = 15
+        case 7:
+            enemyName = "BAT BENNY"
+            enemySprite = pygame.image.load("Art Files/Bat Benny.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Bat Benny Death (100ms)/BennyRPG Bat Benny Death Animation9.png").convert_alpha())
+            enemyStats = [45,5,15,10,100]
+            enemyPayout = 15
+        case 8:
+            enemyName = "EVIL BENNY"
+            enemySprite = pygame.image.load("Art Files/Evil Benny.png").convert_alpha()
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation1.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation2.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation3.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation4.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation5.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation6.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation7.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation8.png").convert_alpha())
+            enemyDeath.append(pygame.image.load("Art Files/Animations/Evil Benny Death (100ms)/BennyRPG Evil Benny Death Animation9.png").convert_alpha())
+            enemyStats = [500,5,20,8,5]
+            enemyPayout = 15
 
 class battleScene():
     def battleUI(pStat,eStat):
         #Print player stats
         #HP
+        uiHealth = pygame.image.load("Art Files/BennyRPG Health UI.png").convert_alpha()
+        uiMana = pygame.image.load("Art Files/BennyRPG Mana.png").convert_alpha()
+        #uiHealth = pygame.transform.scale(uiHealth,(64,64))
+        #uiMana = pygame.transform.scale(uiMana,(64,64))
         toPrint = str(pStat[0])
         headerText = battleUIFont.render("HP " + toPrint, False, WHITE)
+        screen.blit(uiHealth,(270,420))
         screen.blit(headerText,(300,420))
         #MP
         toPrint = str(pStat[1])
         headerText = battleUIFont.render("MP " +toPrint, False, WHITE)
+        screen.blit(uiMana,(270,440))
         screen.blit(headerText,(300,440))
         #pygame.display.update()
         #clock.tick(60)
@@ -307,18 +406,84 @@ class battleScene():
                     playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack15.png").convert_alpha())
                     
                 case "DARKLORD":
+                    shadowballExplosion = []
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball1.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball2.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball3.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball4.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball5.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball6.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball7.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Shadow Ball Idle (100ms)/BennyRPG Shadow Ball8.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball9.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball10.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball11.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball12.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball13.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball14.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball15.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball16.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball17.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball18.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball19.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball20.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball21.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball22.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball23.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball24.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball25.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball26.png").convert_alpha())
+                    shadowballExplosion.append(pygame.image.load("Art Files/Animations/Shadow Ball Explosion (50ms)/BennyRPG Shadow Ball27.png").convert_alpha())
                     pass
                 case "THIEF":
-                    pass
-            for i, anim in enumerate(playerAnim):
-                battleScene.battleBG()
-                anim = pygame.transform.scale(anim,(128,128))
-                battleScene.drawEnemy()
-                screen.blit(anim,(325,150))
-                pygame.display.update()
-                clock.tick(15)
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger1.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger2.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger3.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger4.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger5.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger6.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger7.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Spinning Knife (50ms)/BennyRPG Spinning Dagger8.png").convert_alpha())
+                    playerAnim.append(pygame.image.load("Art Files/Animations/Ice Attack (100ms)/BennyRPG Ice Attack15.png").convert_alpha())
+            if playerClass == "DARKLORD":
+                for i, anim in enumerate(playerAnim):
+                    #7
+                    battleScene.battleBG()
+                    anim = pygame.transform.scale(anim,(128,128))
+                    oneShadow = anim
+                    twoShadow = anim
+                    threeShadow = anim
+                    battleScene.drawEnemy()
+                    screen.blit(oneShadow,(500-i*25,150))
+                    screen.blit(twoShadow,(175+i*25,150))
+                    screen.blit(threeShadow,(325,80+i*10))
+                    pygame.display.update()
+                    clock.tick(40)
+                for j, anim in enumerate(shadowballExplosion):
+                    battleScene.battleBG()
+                    anim = pygame.transform.scale(anim,(128,128))
+                    battleScene.drawEnemy()
+                    screen.blit(anim,(325,150))
+                    pygame.display.update()
+                    clock.tick(30)
+            elif playerClass == "THIEF":
+                for j, anim in enumerate(playerAnim):
+                    battleScene.battleBG()
+                    anim = pygame.transform.scale(anim,(128,128))
+                    battleScene.drawEnemy()
+                    screen.blit(anim,(325,60+j*10))
+                    pygame.display.update()
+                    clock.tick(30)
+            else:
+                for i, anim in enumerate(playerAnim):
+                    battleScene.battleBG()
+                    anim = pygame.transform.scale(anim,(128,128))
+                    battleScene.drawEnemy()
+                    screen.blit(anim,(325,150))
+                    pygame.display.update()
+                    clock.tick(15)
             battleScene.enemyDamaged()
-            pass
+
         
 
     def drawEnemy():
@@ -433,6 +598,7 @@ class battleScene():
         playerDefense = playerStats[3]
         damage = (enemyDamage) - random.randint(playerDefense-3,playerDefense)
         #idk maybe camera shake
+        damage = abs(damage)
         Textbox = str(enemyName) + " does " + str(damage) + " damage"
         pygame.draw.rect(screen, BLACK, [(20,360),(780,460)])
         pygame.draw.rect(screen, WHITE, [(20,360),(750,130)],3)
@@ -671,6 +837,8 @@ class battleScene():
                     isBattle = False
             #ENEMY Turn
             while not isPlayerTurn and not isEnemyDead and not isPlayerDead:
+                battleScene.battleBG()
+                battleScene.drawEnemy()
                 battleScene.enemyChatter()
                 battleScene.enemyAttack()
                 isPlayerDead = battleScene.checkPlayerDead()
@@ -698,6 +866,11 @@ class battleScene():
         sprRedPotion = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
         sprGreenPotion = pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
         sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+        sprDoor = pygame.image.load("Art Files/BennyRPG_Door_Exit.png").convert_alpha()
+        sprBluePotion = pygame.transform.scale(sprBluePotion,(48,48))
+        sprRedPotion = pygame.transform.scale(sprRedPotion,(48,48))
+        sprGreenPotion = pygame.transform.scale(sprGreenPotion,(48,48))
+        sprDoor = pygame.transform.scale(sprDoor,(48,48))
         bennyInventory = [sprRedPotion, sprGreenPotion, sprBluePotion]
         bennyPrices = [20,15,10]
         bennyItemNames = ["Red Potion", "Green Potion", "Blue Potion", "Exit"]
@@ -713,24 +886,31 @@ class battleScene():
             inWalletRender = battleUIFont.render(inWallet, True, WHITE)
             screen.blit(inWalletRender,(25,5))
             for i, stock in enumerate(bennyInventory):
-                screen.blit(stock, (150+i*200,400))
+                screen.blit(stock, (100+i*200,400))
             for j, stock in enumerate(bennyPrices):
                 priceText = battleUIFont.render(str(stock),True,WHITE)
-                screen.blit(priceText,(150+j*200,440))
+                screen.blit(priceText,(110+j*200,450))
             for k, stock in enumerate(bennyItemNames):
                 itemName = battleUIFont.render(str(stock),True,WHITE)
                 screen.blit(itemName,(75+k*200,370))
+            screen.blit(sprDoor, (675,400))
             screen.blit(fade,(0,0))
             pygame.display.update()
             clock.tick(60)
             
     def shopLogic():
+        #BennyRPG_Door_Exit
         sprBennyCoin = pygame.image.load("Art Files/BennyRPG Benny Coin.png").convert_alpha()
         sprBennyShop = pygame.image.load("Art Files/BennyRPG ShopWindow.png")
         sprBluePotion = pygame.image.load("Art Files/Blue_Potion_1.png").convert_alpha()
         sprRedPotion = pygame.image.load("Art Files/Red_Potion_1.png").convert_alpha()
         sprGreenPotion = pygame.image.load("Art Files/Green_Potion_1.png").convert_alpha()
         sprEmptyBottle = pygame.image.load("Art Files/Empty_Bottle.png").convert_alpha()
+        sprDoor = pygame.image.load("Art Files/BennyRPG_Door_Exit.png").convert_alpha()
+        sprBluePotion = pygame.transform.scale(sprBluePotion,(48,48))
+        sprRedPotion = pygame.transform.scale(sprRedPotion,(48,48))
+        sprGreenPotion = pygame.transform.scale(sprGreenPotion,(48,48))
+        sprDoor = pygame.transform.scale(sprDoor,(48,48))
         battleScene.shopIntro()
         global wallet
         global playerItem
@@ -749,11 +929,12 @@ class battleScene():
             inWallet = str(wallet)
             inWalletRender = battleUIFont.render(inWallet, True, WHITE)
             screen.blit(inWalletRender,(25,5))
+            screen.blit(sprDoor, (675,400))
             for i, stock in enumerate(bennyInventory):
-                screen.blit(stock, (150+i*200,400))
+                screen.blit(stock, (100+i*200,400))
             for j, stock in enumerate(bennyPrices):
                 priceText = battleUIFont.render(str(stock),True,WHITE)
-                screen.blit(priceText,(150+j*200,440))
+                screen.blit(priceText,(110+j*200,450))
             for k, stock in enumerate(bennyItemNames):
                 itemName = battleUIFont.render(str(stock),True,WHITE)
                 screen.blit(itemName,(75+k*200,370))
@@ -779,7 +960,7 @@ class battleScene():
         time = pygame.time.get_ticks()/1000
         sizeOne = math.sin(time) * 5
         sizeOne = int(sizeOne)
-        pygame.draw.polygon(screen,WHITE,[(130+sizeOne+point*195,410),(130+sizeOne+point*195,440),(140+sizeOne+point*195,425)])
+        pygame.draw.polygon(screen,WHITE,[(90+sizeOne+point*195,410),(90+sizeOne+point*195,440),(100+sizeOne+point*195,425)])
 
         pass
     def buyItem(choice):
