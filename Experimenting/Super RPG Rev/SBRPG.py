@@ -98,6 +98,19 @@ def introGame():
     
         pygame.display.update()
         clock.tick(FPS)
+
+def rosterScreen(point):
+    if point == "MAGE":
+        sprite = pygame.image.load("Art Files/BennyRPG Mage Benny.png").convert_alpha()
+    elif point== "THIEF":
+        sprite = pygame.image.load("Art Files/BennyRPG Thief Benny.png").convert_alpha()
+    elif point == "DARKLORD":
+        sprite = pygame.image.load("Art Files/BennyRPG DarkLord.png").convert_alpha()
+    elif point == "WARRIOR":
+        sprite = pygame.image.load("Art Files/BennyRPG Warrior Benny.png").convert_alpha()
+    sprite = pygame.transform.scale(sprite,(128,128))
+    screen.blit(sprite,(350,250))
+    
     
 def chooseYourBenny():
     headerFont = pygame.font.Font("Fonts/BennyFont.ttf", 24)
@@ -132,7 +145,7 @@ def chooseYourBenny():
         pygame.draw.line(screen, WHITE, (-300,70),(800,70))
         choiceText = headerFont.render(currentChoice, False, WHITE)
         screen.blit(choiceText,(80+sizeOne,415))
-        
+        rosterScreen(currentChoice)
         #LOL
         for event in pygame.event.get():
             if event.type == QUIT:
